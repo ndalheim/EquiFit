@@ -1,0 +1,121 @@
+{
+  "futter": [
+    {
+      "name": "AGROBS Grünhafer",
+      "marke": "AGROBS",
+      "produktbeschreibung": "AGROBS Grünhafer ist ein besonders schmackhafter Getreideersatz der die Fresszeiten verlängern kann. Es ist reich an natürlichen Vitaminen und Spurenelementen und reguliert auf natürliche Weise den Säure-Basen-Haushalt.\n\nEigenschaften:\n\nbesonders schmackhaft\nmelassefrei\nmit ausgewogenem Calcium-Phosphor-Verhältnis\nniedriger Stärke- und Zuckergehalt\nreich an natürlichen Vitaminen und Spurenelementen\nrohfaserreich\nwird kurz nach der Blüte (noch vor der Stärkeeinlagerung in das Korn) geerntet\nAGROBS Grünhafer ist besonders geeignet:\n\nals Getreideersatz\nals rohfaserreiches, natürliches Futter für Pferde, die auf Stärke empfindlich reagieren\nfür darmempfindliche Pferde\nfür stoffwechselempfindliche Pferde\nzur Regulierung des Säure-Basen-Haushaltes",
+      "zusammensetzung": "Grünhafer gehäckselt und mit Warmluft getrocknet",
+      "fütterungsempfehlungZahl": "",
+      "fütterungsempfehlung": "als Ergänzung zum Grundfutter: 100 bis 500 g je 100 kg Soll-Körpergewicht\nals Getreideersatz: 1,2 kg Grünhafer ersetzen ca. 1 kg Getreide",
+      "inhaltsstoffe": [
+        {
+          "inhaltsstoff": "Rohprotein",
+          "grammProKilo": "79"
+        },
+        {
+          "inhaltsstoff": "praec. verd. Rohprotein",
+          "grammProKilo": "48"
+        },
+        {
+          "inhaltsstoff": "Rohöle und -fette",
+          "grammProKilo": "29"
+        },
+        {
+          "inhaltsstoff": "Rohfaser",
+          "grammProKilo": "257"
+        },
+        {
+          "inhaltsstoff": "Rohasche",
+          "grammProKilo": "69"
+        },
+        {
+          "inhaltsstoff": "Calcium",
+          "grammProKilo": "2.7"
+        },
+        {
+          "inhaltsstoff": "Phosphor",
+          "grammProKilo": "2.9"
+        },
+        {
+          "inhaltsstoff": "Magnesium",
+          "grammProKilo": "1.4"
+        },
+        {
+          "inhaltsstoff": "Chlorid",
+          "grammProKilo": "3.2"
+        },
+        {
+          "inhaltsstoff": "Natrium",
+          "grammProKilo": "0.1"
+        },
+        {
+          "inhaltsstoff": "Kalium",
+          "grammProKilo": "19.7"
+        },
+        {
+          "inhaltsstoff": "Schwefel",
+          "grammProKilo": "1.2"
+        },
+        {
+          "inhaltsstoff": "Zink",
+          "grammProKilo": "0.021"
+        },
+        {
+          "inhaltsstoff": "Mangan",
+          "grammProKilo": "0.043"
+        },
+        {
+          "inhaltsstoff": "Kupfer",
+          "grammProKilo": "0.0039"
+        },
+        {
+          "inhaltsstoff": "Selen",
+          "grammProKilo": "0.00004"
+        },
+        {
+          "inhaltsstoff": "Stärke",
+          "grammProKilo": "22.5"
+        },
+        {
+          "inhaltsstoff": "Zucker",
+          "grammProKilo": "62"
+        },
+        {
+          "inhaltsstoff": "Fruktan",
+          "grammProKilo": "29"
+        },
+        {
+          "inhaltsstoff": "Lysin",
+          "grammProKilo": "3.4"
+        },
+        {
+          "inhaltsstoff": "Methionin",
+          "grammProKilo": "1.1"
+        },
+        {
+          "inhaltsstoff": "Cystin",
+          "grammProKilo": "0.5"
+        },
+        {
+          "inhaltsstoff": "Threonin",
+          "grammProKilo": "2.7"
+        }
+
+
+      ]
+    },
+    {
+      "name": "",
+      "marke": "",
+      "produktbeschreibung": "",
+      "zusammensetzung": "",
+      "fütterungsempfehlungZahl": "",
+      "fütterungsempfehlung": "",
+      "inhaltsstoffe": [
+        {
+
+        }
+       ]
+    }
+  ]
+}
