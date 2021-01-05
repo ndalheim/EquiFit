@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "175446951216",
+    "firebase_url": "https://pferdeapp-b3d75.firebaseio.com",
+    "project_id": "pferdeapp-b3d75",
+    "storage_bucket": "pferdeapp-b3d75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175446951216:android:9a5ffc3cdad7b96c8234f5",
+        "android_client_info": {
+          "package_name": "com.example.pferdeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175446951216-npv53go6csbbt41a8duhiq8l353oocn5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pferdeapp",
+            "certificate_hash": "1cf2e1f82052c6223eedd43a0a146bb763a67341"
+          }
+        },
+        {
+          "client_id": "175446951216-voh64p3n50nnon4nli3o6lgvhar18gd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbxlOUAYhINIlmWm0Ykk0YFbfzkxrNXk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175446951216-voh64p3n50nnon4nli3o6lgvhar18gd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

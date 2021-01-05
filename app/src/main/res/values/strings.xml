@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EquiFit</string>
+    <string name="title_feed">Futter</string>
+    <string name="title_calendar">Kalender</string>
+    <string name="title_profil">Profil</string>
+    <string name="title_password">Passwort</string>
+    <string name="title_mail">Email</string>
+    <string name="title_login">login</string>
+    <string name="title_forgot">vergessen</string>
+    <string name="forgot_password">Passwort vergessen</string>
+    <string name="register_now">Noch kein Konto? -> Registiere dich hier</string>
+</resources>
