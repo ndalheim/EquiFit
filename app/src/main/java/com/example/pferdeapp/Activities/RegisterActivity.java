@@ -32,8 +32,8 @@ import java.util.Map;
 //import android.support.v7.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final String TAG = "RegisterActivity";
 
-    public static final String TAG = "TAG";
     EditText mNutzername, mEmail, mPasswort, mPasswort_wiederholen;
     Button mRegisterBtn;
     TextView mLoginBtn;

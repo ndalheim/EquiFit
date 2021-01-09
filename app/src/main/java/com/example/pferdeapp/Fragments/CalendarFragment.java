@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class CalendarFragment extends Fragment {
+    private static final String TAG = "CalendarFragment";
 
 
     private FirebaseAuth fAuth;

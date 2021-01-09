@@ -9,4 +9,14 @@
     <string name="title_forgot">vergessen</string>
     <string name="forgot_password">Passwort vergessen</string>
     <string name="register_now">Noch kein Konto? -> Registiere dich hier</string>
+    <string name="add_horse">Pferd hinzufügen</string>
+    <string name="logout">Ausloggen</string>
+    <string name="horseName">PferdeName</string>
+    <string name="horseHeight">Stockmaß (in cm)</string>
+    <string name="HorseWeight">Gewicht (in kg)</string>
+    <string name="horseCondidion">Trainingszustand</string>
+    <string name="HorseDefect">Mängel</string>
+    <string name="horseIntolerance">Intoleranz</string>
+    <string name="save">speichern</string>
+    <string name="back">zurück</string>
 </resources>

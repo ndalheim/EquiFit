@@ -17,7 +17,6 @@ import com.example.pferdeapp.Fragments.ProfilFragment;
 import com.example.pferdeapp.ImageToText;
 import com.example.pferdeapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 //import android.support.v7.app.AppCompatActivity;
@@ -55,19 +54,20 @@ public class MainActivity extends AppCompatActivity {
         btm_nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                setFragment(feedFragment);
 
                 switch (item.getItemId()) {
                     case R.id.navigation_feed:
                         setFragment(feedFragment);
-                        // Toast.makeText(MainActivity.this, "Training", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Futter", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navigation_calendar:
                         setFragment(calendarFragment);
-                        // Toast.makeText(MainActivity.this, "Analyse", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Kalender", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navigation_profil:
                         setFragment(profilFragment);
-                        // Toast.makeText(MainActivity.this, "Freundesliste", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Profil", Toast.LENGTH_SHORT).show();
                         return true;
                     default:
                         return false;

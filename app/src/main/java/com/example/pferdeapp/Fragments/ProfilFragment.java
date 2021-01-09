@@ -24,8 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilFragment extends Fragment {
-
-    private static final String TAG = "profilFragment";
+    private static final String TAG = "ProfilFragment";
 
     private FirebaseAuth fAuth;
     private FirebaseUser user;
@@ -67,17 +66,6 @@ public class ProfilFragment extends Fragment {
         setLogoutUserListener();
 
         return rootView;
-    }
-
-
-    /**
-     * Logout Button OnClick-Method
-     * Logout a user and start the LoginActivity
-     * @param v
-     */
-    public void logout(View v) {
-        fAuth.signOut();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
     /**

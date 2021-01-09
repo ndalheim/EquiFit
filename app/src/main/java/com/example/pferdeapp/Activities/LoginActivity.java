@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 //import android.support.v7.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
 
     EditText mEmail, mPassword;
     Button mLoginBtn;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = firebaseAuth.getInstance();
         mLoginBtn = findViewById(R.id.login_button);
         mRegisterBtn = findViewById(R.id.go_to_register);
-        mForgotPasswordBtn = findViewById(R.id.forgotPassword);
+        mForgotPasswordBtn = findViewById(R.id.forgot_password);
         progressBar = findViewById(R.id.progressBar);
 
 
