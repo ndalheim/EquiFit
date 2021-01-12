@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         profilFragment = new ProfilFragment();
 
+        setFragment(feedFragment);
+
         navigationListener();
     }
 
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         btm_nav_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                setFragment(feedFragment);
 
                 switch (item.getItemId()) {
                     case R.id.navigation_feed:

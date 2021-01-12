@@ -58,7 +58,7 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        mAddHorseBtn = (Button) rootView.findViewById(R.id.addHorse_button);
+        mAddHorseBtn = (Button) rootView.findViewById(R.id.add_horse_button);
         goToAddHorseActivity();
 
         return rootView;

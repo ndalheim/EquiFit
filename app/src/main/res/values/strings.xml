@@ -19,4 +19,12 @@
     <string name="horseIntolerance">Intoleranz</string>
     <string name="save">speichern</string>
     <string name="back">zurück</string>
+    <string name="add_feed">Futter Hinzufügen</string>
+    <string name="feedName">Futter Name</string>
+    <string name="feedBrand">Marke</string>
+    <string name="productDescription">Produktbeschreibung</string>
+    <string name="feedComposition">Zusammensetzung</string>
+    <string name="feedIngredients">Inhaltsstoffe</string>
+    <string name="feedRecommendationDescription">Fütterungsempfehlung</string>
+    <string name="feedIngredientsValue">g/kg</string>
 </resources>
