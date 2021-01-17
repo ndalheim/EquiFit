@@ -1,18 +1,16 @@
 package com.example.pferdeapp.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.pferdeapp.Activities.AddFeedActivity;
-import com.example.pferdeapp.Activities.AddHorseActivity;
 import com.example.pferdeapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,8 +21,6 @@ public class CalendarFragment extends Fragment {
 
     private FirebaseAuth fAuth;
     private FirebaseUser user;
-
-    private Button mAddFeedBtn;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -58,26 +54,6 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        mAddFeedBtn = (Button) rootView.findViewById(R.id.add_feed_button);
-        goToAddFeedActivity();
-
         return rootView;
-    }
-
-    /**
-     * Logout-Button OnClickListener:
-     * If user click on the logout button he will be logout.
-     */
-    private void goToAddFeedActivity() {
-        mAddFeedBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Du bist in der AddHorse Activity!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "goToAddHorseActivity: success");
-                startActivity(new Intent(getActivity(), AddFeedActivity.class));
-            }
-
-        });
     }
 }

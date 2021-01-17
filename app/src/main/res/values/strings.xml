@@ -15,7 +15,7 @@
     <string name="horseHeight">Stockmaß (in cm)</string>
     <string name="HorseWeight">Gewicht (in kg)</string>
     <string name="horseCondidion">Trainingszustand</string>
-    <string name="HorseDefect">Mängel</string>
+    <string name="HorseDefect">Mangel</string>
     <string name="horseIntolerance">Intoleranz</string>
     <string name="save">speichern</string>
     <string name="back">zurück</string>
@@ -27,4 +27,64 @@
     <string name="feedIngredients">Inhaltsstoffe</string>
     <string name="feedRecommendationDescription">Fütterungsempfehlung</string>
     <string name="feedIngredientsValue">g/kg</string>
+    <string name="title_horse">Pferd</string>
+    <string-array name="defects_array">
+        <item>keine</item>
+        <item>Zink</item>
+        <item>Eisen</item>
+        <item>Selen</item>
+        <item>Mangan</item>
+        <item>Kupfer</item>
+        <item>Jod</item>
+    </string-array>
+    <string-array name="condidion_array">
+        <item>gut</item>
+        <item>übergewichtig</item>
+        <item>untergewichtig</item>
+    </string-array>
+
+    <string-array name="ingrements_array">
+        <item>Rohprotein </item>
+        <item>praec. verd. Rohprotein</item>
+        <item>Rohöle und - fette</item>
+        <item>Rohfaser</item>
+        <item>Rohasche</item>
+        <item>Calcium</item>
+        <item>Phosphor</item>
+        <item>Magnesium</item>
+        <item>Chlorid</item>
+        <item>Natrium</item>
+        <item>Kalium</item>
+        <item>Schwefel</item>
+        <item>Lysin</item>
+        <item>Methionin</item>
+        <item>Cystin</item>
+        <item>Threonin</item>
+        <item>Zink</item>
+        <item>Mangan</item>
+        <item>Kupfer</item>
+        <item>Selen</item>
+        <item>Selen organisch</item>
+        <item>Eisen</item>
+        <item>Jod</item>
+        <item>Cobalt</item>
+        <item>Vitamin E</item>
+        <item>Vitamin A</item>
+        <item>Vitamin D3</item>
+        <item>Vitamin B1</item>
+        <item>Vitamin B2</item>
+        <item>Vitamin B6</item>
+        <item>Vitamin B12</item>
+        <item>ß-Carotin</item>
+        <item>Stärke</item>
+        <item>Fruktan</item>
+        <item>Stärke</item>
+        <item>Zucker</item>
+        <item>Stärke und Zucker</item>
+        <item>Cholinchlorid</item>
+        <item>Nicotinsäure</item>
+        <item>Folsäure</item>
+        <item>Pantothensäure</item>
+        <item>Biotin</item>
+    </string-array>
 </resources>

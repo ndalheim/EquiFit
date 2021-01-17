@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,7 +34,8 @@ public class AddFeedActivity extends AppCompatActivity {
      private String feedingRecommendationDescription; //Fütterungsempfehlung
      private Map<String,Double> ingredients; //Inhaltsstoffe*/
 
-    EditText mFeedName, mfeedBrand, mProductDescription, mComposition, mFeedingRecommendation, mFeedingRecommendationDescription, mIngredients, mIngredientsValue;
+    EditText mFeedName, mfeedBrand, mProductDescription, mComposition, mFeedingRecommendation, mFeedingRecommendationDescription, mIngredientsValue;
+    Spinner mIngredients;
     Button mSaveFeedBtn, mBackToMainBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -47,7 +50,11 @@ public class AddFeedActivity extends AppCompatActivity {
         mComposition = findViewById(R.id.feed_composition);
         mFeedingRecommendationDescription = findViewById(R.id.feed_recommendation_description);
 
-        mIngredients = findViewById(R.id.feed_ingredients);
+        mIngredients = (Spinner) findViewById(R.id.feed_ingredients_spinner);
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.ingrements_array, android.R.layout.simple_spinner_item);
+        mIngredients.setAdapter(conditionAdapter);
+
         mIngredientsValue = findViewById(R.id.feed_ingredients_value);
 
         mSaveFeedBtn = findViewById(R.id.save_feed_information_button);
@@ -75,11 +82,18 @@ public class AddFeedActivity extends AppCompatActivity {
 
 
                 Map<String, Double> ingredients = new HashMap<String, Double>();
-                ingredients.put(mIngredients.getText().toString().trim(), Double.parseDouble(mIngredientsValue.getText().toString().trim()));
+                ingredients.put(mIngredients.getSelectedItem().toString(), Double.parseDouble(mIngredientsValue.getText().toString().trim()));
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = null;
+                if (user !=null) {
+                    uid = user.getUid();
+                }
 
 
                 Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients);
-                db.collection("Feed").document("newFeed").set(feed)
+                String documentName = feedName + "_" + uid;
+                db.collection("Feed").document(documentName).set(feed)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

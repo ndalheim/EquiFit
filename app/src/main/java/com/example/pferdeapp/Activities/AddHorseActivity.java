@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AddHorseActivity extends AppCompatActivity {
+public class AddHorseActivity extends AppCompatActivity{
 
     private static final String TAG = "AddHorseActivity";
 
@@ -34,7 +37,8 @@ public class AddHorseActivity extends AppCompatActivity {
     private String[] defect; //Mängel
     private String[] intolerance; //Intolerant/Allergie*/
 
-    EditText mhorseName, mhorseHeight, mhorseWeight, mhorseCondition, mhorseDefect, mhorseIntolerance;
+    EditText mhorseName, mhorseHeight, mhorseWeight;
+    Spinner mhorseCondition, mhorseDefect, mhorseIntolerance;
     Button mSaveHorseBtn, mBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -47,15 +51,27 @@ public class AddHorseActivity extends AppCompatActivity {
         mhorseName = findViewById(R.id.horse_name);
         mhorseHeight = findViewById(R.id.horse_height);
         mhorseWeight = findViewById(R.id.horse_weight);
-        mhorseCondition = findViewById(R.id.horse_condidion);
-        mhorseDefect = findViewById(R.id.horse_defect);
-        mhorseIntolerance = findViewById(R.id.horse_intolerance);
+
+        mhorseCondition = (Spinner) findViewById(R.id.horse_condidion_spinner);
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.condidion_array, android.R.layout.simple_spinner_item);
+        mhorseCondition.setAdapter(conditionAdapter);
+
+        mhorseDefect = (Spinner) findViewById(R.id.horse_defect_spinner);
+        ArrayAdapter<CharSequence> defectAdapter = ArrayAdapter.createFromResource(this,
+                R.array.defects_array, android.R.layout.simple_spinner_item);
+        mhorseDefect.setAdapter(defectAdapter);
+
+        mhorseIntolerance = (Spinner) findViewById(R.id.horse_intolerance_spinner);
+        ArrayAdapter<CharSequence> intoleranceAdapter = ArrayAdapter.createFromResource(this,
+                R.array.defects_array, android.R.layout.simple_spinner_item);
+        setSpinner(mhorseIntolerance, intoleranceAdapter);
 
         mSaveHorseBtn = findViewById(R.id.save_horse_information_button);
         mBackBtn = findViewById(R.id.back_to_FeedFragment_button);
 
 
-        //weiterleitung zum Feed Fragment
+        // Weiterleitung zur Main Activity
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,9 +87,9 @@ public class AddHorseActivity extends AppCompatActivity {
                 String horseName = mhorseName.getText().toString().trim();
                 int horseHeight = Integer.parseInt(mhorseHeight.getText().toString().trim());
                 int horseWeight = Integer.parseInt(mhorseWeight.getText().toString().trim());
-                String horseCondition = mhorseCondition.getText().toString().trim();
-                String horseDefect = mhorseDefect.getText().toString().trim();
-                String horseIntolerance = mhorseIntolerance.getText().toString().trim();
+                String horseCondition = mhorseCondition.getSelectedItem().toString();
+                String horseDefect = mhorseDefect.getSelectedItem().toString();
+                String horseIntolerance = mhorseIntolerance.getSelectedItem().toString();
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = null;
@@ -82,7 +98,8 @@ public class AddHorseActivity extends AppCompatActivity {
                 }
 
                 Horse horse = new Horse(horseName, horseHeight, horseWeight, horseCondition, horseDefect, horseIntolerance, uid);
-                db.collection("Horse").document("newHorse").set(horse)
+                String documentName = horseName + "_" + uid;
+                db.collection("Horse").document(documentName).set(horse)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -105,8 +122,13 @@ public class AddHorseActivity extends AppCompatActivity {
         });
 
 
-    }
 
+
+    }
+    void setSpinner(Spinner spinner, ArrayAdapter<CharSequence> spinnerAdapter){
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);;
+    }
 
 }
 

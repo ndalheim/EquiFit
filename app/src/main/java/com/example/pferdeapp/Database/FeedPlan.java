@@ -1,7 +1,12 @@
 package com.example.pferdeapp.Database;
 
+import java.util.Map;
+
 public class FeedPlan {
 
-    private String name;
+    private String horseName;
+    private String uid;
+    private Map<String,Map<Integer, Integer>> horseFeedRation;
+
 
 }

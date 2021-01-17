@@ -87,7 +87,7 @@
 
     <EditText
         android:id="@+id/feed_ingredients_value"
-        android:layout_width="143dp"
+        android:layout_width="102dp"
         android:layout_height="37dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="64dp"
@@ -97,55 +97,52 @@
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toEndOf="@+id/feed_ingredients"
         app:layout_constraintTop_toBottomOf="@+id/feed_recommendation_description"
         app:layout_constraintVertical_bias="0.006" />
 
-    <EditText
-        android:id="@+id/feed_ingredients"
-        android:layout_width="114dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="@string/feedIngredients"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.218"
-        app:layout_constraintStart_toStartOf="parent"
+    <Spinner
+        android:id="@+id/feed_ingredients_spinner"
+        android:layout_width="166dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/back_to_CalendarFragment_button"
+        app:layout_constraintEnd_toStartOf="@+id/feed_ingredients_value"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toEndOf="@+id/horse_defect"
         app:layout_constraintTop_toBottomOf="@+id/feed_recommendation_description"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
 
     <Button
         android:id="@+id/save_feed_information_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginRight="88dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/my_button"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feed_ingredients"
-        app:layout_constraintVertical_bias="0.199" />
+        app:layout_constraintTop_toBottomOf="@+id/feed_ingredients_value"
+        app:layout_constraintVertical_bias="0.875" />
 
     <Button
         android:id="@+id/back_to_CalendarFragment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginRight="123dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginBottom="216dp"
         android:background="@drawable/my_button"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/save_feed_information"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/save_feed_information_button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feed_ingredients"
-        app:layout_constraintVertical_bias="0.199"
         tools:ignore="UnknownId" />
 
 

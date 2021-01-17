@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@android:color/darker_gray"
     android:backgroundTintMode="screen"
-    tools:context=".Activities.LoginActivity">
+    tools:context=".Activities.AddHorseActivity">
 
 
     <EditText
@@ -16,7 +16,10 @@
         android:layout_height="40dp"
         android:ems="10"
         android:hint="@string/horseName"
+        android:backgroundTint="@color/colorDarkGreen"
         android:inputType="textPersonName"
+        android:singleLine="true"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -28,10 +31,14 @@
         android:id="@+id/horse_height"
         android:layout_width="280dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/horseHeight"
-        android:inputType="text"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:maxLength="3"
+        android:singleLine="true"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -43,10 +50,14 @@
         android:id="@+id/horse_weight"
         android:layout_width="280dp"
         android:layout_height="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/HorseWeight"
-        android:inputType="text"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:maxLength="4"
+        android:singleLine="true"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -54,78 +65,114 @@
         app:layout_constraintTop_toBottomOf="@+id/horse_height"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
+    <TextView
         android:id="@+id/horse_condidion"
-        android:layout_width="280dp"
+        android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/horseCondidion"
         android:inputType="text"
+        android:lines="1"
+        android:singleLine="true"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.231"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horse_weight"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintVertical_bias="0.009" />
 
-    <EditText
+    <Spinner
+        android:id="@+id/horse_condidion_spinner"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/horse_defect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toEndOf="@+id/horse_condidion"
+        app:layout_constraintTop_toBottomOf="@+id/horse_weight"
+        app:layout_constraintVertical_bias="0.823"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
         android:id="@+id/horse_defect"
-        android:layout_width="280dp"
+        android:layout_width="89dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/HorseDefect"
         android:inputType="text"
+        android:lines="1"
+        android:singleLine="true"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horse_condidion"
-        app:layout_constraintVertical_bias="0.008" />
+        app:layout_constraintVertical_bias="0.01" />
 
-    <EditText
+
+
+    <TextView
         android:id="@+id/horse_intolerance"
-        android:layout_width="280dp"
+        android:layout_width="89dp"
         android:layout_height="40dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/horseIntolerance"
         android:inputType="text"
+        android:lines="1"
+        android:singleLine="true"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horse_defect"
-        app:layout_constraintVertical_bias="0.018" />
+        app:layout_constraintVertical_bias="0.01" />
+
+    <Spinner
+        android:id="@+id/horse_intolerance_spinner"
+        android:layout_width="178dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/save_horse_information_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toEndOf="@+id/horse_intolerance"
+        app:layout_constraintTop_toBottomOf="@+id/horse_defect_spinner"
+        app:layout_constraintVertical_bias="0.65"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/save_horse_information_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
+        android:background="@drawable/my_button"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horse_intolerance"
-        app:layout_constraintVertical_bias="0.197"
-        android:background="@drawable/my_button"/>
+        app:layout_constraintVertical_bias="0.197" />
 
     <Button
         android:id="@+id/back_to_FeedFragment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="123dp"
-        android:layout_marginRight="123dp"
+        android:background="@drawable/my_button"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/save_horse_information"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/save_horse_information_button"
+        app:layout_constraintHorizontal_bias="0.398"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horse_intolerance"
         app:layout_constraintVertical_bias="0.197"
-        android:background="@drawable/my_button"
         tools:ignore="UnknownId" />
 
 

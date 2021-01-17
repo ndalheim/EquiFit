@@ -27,6 +27,8 @@
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.AddHorseActivity" />
         <activity android:name=".Activities.AddFeedActivity" />
+        <activity android:name=".Activities.AddHorseFeedActivity" />
+        <activity android:name=".Activities.FeedInformationActivity" />
         <activity android:name=".ImageToText"/>
         <activity android:name=".ForgotPassword" />
 

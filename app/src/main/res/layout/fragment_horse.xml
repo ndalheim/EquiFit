@@ -5,23 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FeedFragment">
+    tools:context=".Fragments.HorseFragment">
 
     <ListView
-        android:id="@+id/feed_list_view"
+        android:id="@+id/horse_list_view"
         android:layout_width="410dp"
         android:layout_height="444dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_feed_button"
+        app:layout_constraintBottom_toTopOf="@+id/add_horse_button"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+
     <Button
-        android:id="@+id/add_feed_button"
+        android:id="@+id/add_horse_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="492dp"
         android:layout_marginBottom="285dp"
-        android:text="@string/add_feed"
+        android:text="@string/add_horse"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

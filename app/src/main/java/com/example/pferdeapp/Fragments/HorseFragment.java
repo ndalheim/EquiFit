@@ -3,8 +3,11 @@ package com.example.pferdeapp.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +20,8 @@ import android.widget.ListView;
 
 import android.widget.Toast;
 
-import com.example.pferdeapp.Activities.AddFeedActivity;
+import com.example.pferdeapp.Activities.AddHorseActivity;
 import com.example.pferdeapp.Activities.AddHorseFeedActivity;
-import com.example.pferdeapp.Activities.FeedInformationActivity;
 import com.example.pferdeapp.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,19 +36,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FeedFragment extends Fragment {
+public class HorseFragment extends Fragment {
     private static final String TAG = "FeedFragment";
 
-    private Button mAddFeedBtn;
-    ListView feedListView;
-    private List<String> feedList = new ArrayList<>();
+    private Button mAddHorseBtn;
+    ListView listView;
+    private List<String> horseList = new ArrayList<>();
     FirebaseUser user;
     String uid;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-    public FeedFragment() {
+    public HorseFragment() {
         // Required empty public constructor
     }
 
@@ -58,39 +60,41 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_horse, container, false);
 
-        feedListView = (ListView) rootView.findViewById(R.id.feed_list_view);
+        listView = (ListView) rootView.findViewById(R.id.horse_list_view);
 
-        mAddFeedBtn = (Button) rootView.findViewById(R.id.add_feed_button);
-        goToAddFeedActivity();
+        mAddHorseBtn = (Button) rootView.findViewById(R.id.add_horse_button);
+        goToAddHorseActivity();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
 
 
-        db.collection("Feed").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Horse").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                feedList.clear();
+                horseList.clear();
 
                 for (DocumentSnapshot snapshot : documentSnapshot){
-                        feedList.add(snapshot.getString("name"));
+                    if(uid.equals(snapshot.getString("uid"))){
+                        horseList.add(snapshot.getString("horseName"));
+                    }
 
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_selectable_list_item, horseList);
                 adapter.notifyDataSetChanged();
-                feedListView.setAdapter(adapter);
+                listView.setAdapter(adapter);
             }
         });
 
         //
-        feedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                startActivity(new Intent(getActivity(), FeedInformationActivity.class));
+                startActivity(new Intent(getActivity(), AddHorseFeedActivity.class));
 
             }
         });
@@ -102,14 +106,14 @@ public class FeedFragment extends Fragment {
      * Logout-Button OnClickListener:
      * If user click on the logout button he will be logout.
      */
-    private void goToAddFeedActivity() {
-        mAddFeedBtn.setOnClickListener(new View.OnClickListener() {
+    private void goToAddHorseActivity() {
+        mAddHorseBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Du bist in der AddHorse Activity!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "goToAddHorseActivity: success");
-                startActivity(new Intent(getActivity(), AddFeedActivity.class));
+                startActivity(new Intent(getActivity(), AddHorseActivity.class));
             }
 
         });
