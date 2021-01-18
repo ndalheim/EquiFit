@@ -28,6 +28,16 @@
     <string name="feedRecommendationDescription">Fütterungsempfehlung</string>
     <string name="feedIngredientsValue">g/kg</string>
     <string name="title_horse">Pferd</string>
+    <string name="add_feed_to_feed_plan">Futter zum Futterplan hinzufügen</string>
+    <string name="add">+</string>
+    <string name="username">Nutzername</string>
+    <string name="repeat_password">Passwort wiederholen</string>
+    <string name="feed_informations">Futter Informationen:</string>
+    <string name="your_horses">Deine Pferde</string>
+    <string name="whichFeedInterested">Welches Futter Interessiert dich?</string>
+    <string name="feedCosts">Preis</string>
+    <string name="feedAmount">Inhalt in kg</string>
+
     <string-array name="defects_array">
         <item>keine</item>
         <item>Zink</item>
@@ -37,6 +47,7 @@
         <item>Kupfer</item>
         <item>Jod</item>
     </string-array>
+
     <string-array name="condidion_array">
         <item>gut</item>
         <item>übergewichtig</item>
@@ -86,5 +97,11 @@
         <item>Folsäure</item>
         <item>Pantothensäure</item>
         <item>Biotin</item>
+    </string-array>
+
+    <string-array name="unit_array">
+        <item>%</item>
+        <item>mg/kg</item>
+        <item>MJ/kg</item>
     </string-array>
 </resources>

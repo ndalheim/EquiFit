@@ -76,7 +76,7 @@ public class FeedFragment extends Fragment {
                 feedList.clear();
 
                 for (DocumentSnapshot snapshot : documentSnapshot){
-                        feedList.add(snapshot.getString("name"));
+                        feedList.add(snapshot.getString("name") + "_" + snapshot.get("brand"));
 
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
@@ -90,7 +90,9 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                startActivity(new Intent(getActivity(), FeedInformationActivity.class));
+                Intent intent = new Intent(getActivity(), FeedInformationActivity.class);
+                intent.putExtra("DocumentName", feedList.get(position));
+                startActivity(intent);
 
             }
         });

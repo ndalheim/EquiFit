@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.pferdeapp.Activities.AddHorseActivity;
 import com.example.pferdeapp.Activities.AddHorseFeedActivity;
+import com.example.pferdeapp.Activities.FeedInformationActivity;
+import com.example.pferdeapp.Activities.ShowHorseActivity;
 import com.example.pferdeapp.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +45,7 @@ public class HorseFragment extends Fragment {
     ListView listView;
     private List<String> horseList = new ArrayList<>();
     FirebaseUser user;
-    String uid;
+    String uid, horseNameAndUid;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -94,7 +96,10 @@ public class HorseFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                startActivity(new Intent(getActivity(), AddHorseFeedActivity.class));
+                Intent intent = new Intent(getActivity(), ShowHorseActivity.class);
+                horseNameAndUid = horseList.get(position) + "_" + uid;
+                intent.putExtra("HorseName", horseNameAndUid);
+                startActivity(intent);
 
             }
         });

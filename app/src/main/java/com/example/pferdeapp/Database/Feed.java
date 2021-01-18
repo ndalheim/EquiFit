@@ -10,18 +10,21 @@ public class Feed {
     private String composition; //Zusammensetzung
     //private Map<String,int[]> feedingRecommendation; //Fütterungsempfehlung als Faktor
     private String feedingRecommendationDescription; //Fütterungsempfehlung
-    private Map<String,Double> ingredients; //Inhaltsstoffe
+    //private Map<String,Map<Double, String>> ingredients; //Inhaltsstoffe
+    private Map<String, Double> ingredients; //Inhaltsstoffe
+    private Map<String, String> ingredientsUnit; //Inhaltsstoffe
 
     public Feed() {
     }
 
-    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String, Double> ingredients) {
+    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String,Double> ingredients, Map<String,String> ingredientsUnit) {
         this.name = name;
         this.brand = brand;
         this.productDescription = productDescription;
         this.composition = composition;
         this.feedingRecommendationDescription = feedingRecommendationDescription;
         this.ingredients = ingredients;
+        this.ingredientsUnit = ingredientsUnit;
     }
 
     public String getName() {
@@ -40,12 +43,12 @@ public class Feed {
         this.brand = brand;
     }
 
-    public String getProdictDescription() {
+    public String getProductDescription() {
         return productDescription;
     }
 
-    public void setProdictDescription(String prodictDescription) {
-        this.productDescription = prodictDescription;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public String getComposition() {
@@ -56,6 +59,14 @@ public class Feed {
         this.composition = composition;
     }
 
+    public String getFeedingRecommendationDescription() {
+        return feedingRecommendationDescription;
+    }
+
+    public void setFeedingRecommendationDescription(String feedingRecommendationDescription) {
+        this.feedingRecommendationDescription = feedingRecommendationDescription;
+    }
+
     public Map<String, Double> getIngredients() {
         return ingredients;
     }
@@ -64,11 +75,11 @@ public class Feed {
         this.ingredients = ingredients;
     }
 
-    public String getFeedingRecommendationDescription() {
-        return feedingRecommendationDescription;
+    public Map<String, String> getIngredientsUnit() {
+        return ingredientsUnit;
     }
 
-    public void setFeedingRecommendationDescription(String feedingRecommendationDescription) {
-        this.feedingRecommendationDescription = feedingRecommendationDescription;
+    public void setIngredientsUnit(Map<String, String> ingredientsUnit) {
+        this.ingredientsUnit = ingredientsUnit;
     }
 }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@android:color/darker_gray"
     android:backgroundTintMode="screen"
-    tools:context=".Activities.AddHorseActivity">
+    tools:context=".Activities.LoginActivity">
 
 
     <EditText
@@ -34,6 +34,7 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/horseHeight"
+        android:backgroundTint="@color/colorDarkGreen"
         android:inputType="number"
         android:digits="0123456789"
         android:maxLength="3"
@@ -53,6 +54,7 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/HorseWeight"
+        android:backgroundTint="@color/colorDarkGreen"
         android:inputType="number"
         android:digits="0123456789"
         android:maxLength="4"
@@ -114,7 +116,18 @@
         app:layout_constraintTop_toBottomOf="@+id/horse_condidion"
         app:layout_constraintVertical_bias="0.01" />
 
-
+    <Spinner
+        android:id="@+id/horse_defect_spinner"
+        android:layout_width="178dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/horse_intolerance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toEndOf="@+id/horse_defect"
+        app:layout_constraintTop_toBottomOf="@+id/horse_condidion"
+        app:layout_constraintVertical_bias="0.736"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/horse_intolerance"

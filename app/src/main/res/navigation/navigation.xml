@@ -1,5 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/loginActivity">
 
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.pferdeapp.Activities.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" >
+        <action
+            android:id="@+id/action_loginActivity_to_registerActivity"
+            app:destination="@id/registerActivity" />
+        <action
+            android:id="@+id/action_loginActivity_to_mainActivity"
+            app:destination="@id/mainActivity" >
+            <action
+                android:id="@+id/action_action_loginActivity_to_mainActivity_to_mainActivity"
+                app:destination="@id/mainActivity" />
+        </action>
+    </activity>
+    <activity
+        android:id="@+id/registerActivity"
+        android:name="com.example.pferdeapp.Activities.RegisterActivity"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" >
+        <action
+            android:id="@+id/action_registerActivity_to_loginActivity"
+            app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_registerActivity_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </activity>
+    <activity
+        android:id="@+id/addFeedActivity"
+        android:name="com.example.pferdeapp.Activities.AddFeedActivity"
+        android:label="activity_add_feed"
+        tools:layout="@layout/activity_add_feed" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.pferdeapp.Activities.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" >
+        <action
+            android:id="@+id/action_mainActivity_to_horseFragment"
+            app:destination="@id/horseFragment" >
+            <action
+                android:id="@+id/action_action_mainActivity_to_horseFragment_to_calendarFragment"
+                app:destination="@id/calendarFragment" />
+        </action>
+        <action
+            android:id="@+id/action_mainActivity_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_mainActivity_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_mainActivity_to_profilFragment"
+            app:destination="@id/profilFragment" />
+    </activity>
+    <fragment
+        android:id="@+id/horseFragment"
+        android:name="com.example.pferdeapp.Fragments.HorseFragment"
+        android:label="fragment_horse"
+        tools:layout="@layout/fragment_horse" >
+        <action
+            android:id="@+id/action_horseFragment_to_addHorseActivity"
+            app:destination="@id/addHorseActivity" />
+        <action
+            android:id="@+id/action_horseFragment_to_showHorseActivity"
+            app:destination="@id/showHorseActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.pferdeapp.Fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.example.pferdeapp.Fragments.FeedFragment"
+        android:label="fragment_feed"
+        tools:layout="@layout/fragment_feed" >
+        <action
+            android:id="@+id/action_feedFragment_to_addFeedActivity"
+            app:destination="@id/addFeedActivity" />
+        <action
+            android:id="@+id/action_feedFragment_to_feedInformationActivity"
+            app:destination="@id/feedInformationActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/addHorseActivity"
+        android:name="com.example.pferdeapp.Activities.AddHorseActivity"
+        android:label="activity_add_horse"
+        tools:layout="@layout/activity_add_horse" />
+    <fragment
+        android:id="@+id/profilFragment"
+        android:name="com.example.pferdeapp.Fragments.ProfilFragment"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profil" />
+    <activity
+        android:id="@+id/feedInformationActivity"
+        android:name="com.example.pferdeapp.Activities.FeedInformationActivity"
+        android:label="actovity_feed_information"
+        tools:layout="@layout/activity_feed_information" />
+    <activity
+        android:id="@+id/showHorseActivity"
+        android:name="com.example.pferdeapp.Activities.ShowHorseActivity"
+        android:label="acivity_show_horse"
+        tools:layout="@layout/acivity_show_horse" >
+        <action
+            android:id="@+id/action_showHorseActivity_to_addHorseFeedActivity"
+            app:destination="@id/addHorseFeedActivity" />
+    </activity>
+    <activity
+        android:id="@+id/addHorseFeedActivity"
+        android:name="com.example.pferdeapp.Activities.AddHorseFeedActivity"
+        android:label="activity_add_horse_feed"
+        tools:layout="@layout/activity_add_horse_feed" >
+        <action
+            android:id="@+id/action_addHorseFeedActivity_to_feedInformationActivity"
+            app:destination="@id/feedInformationActivity" />
+    </activity>
 </navigation>

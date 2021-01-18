@@ -3,8 +3,8 @@ package com.example.pferdeapp.Database;
 public class Horse {
 
     private String horseName; //Name
-    private int horseHeight; //Stockmaß
-    private int horseWeight; //Gewicht
+    private Double horseHeight; //Stockmaß
+    private Double horseWeight; //Gewicht
     private String horseCondition; //Trainingszustand
     private String defect; //Mängel
     private String intolerance; //Intolerant/Allergie
@@ -14,7 +14,7 @@ public class Horse {
     public Horse() {
     }
 
-    public Horse(String horseName, int horseHeight, int horseWeight, String horseCondition, String defect, String intolerance, String uid) {
+    public Horse(String horseName, Double horseHeight, Double horseWeight, String horseCondition, String defect, String intolerance, String uid) {
         this.horseName = horseName;
         this.horseHeight = horseHeight;
         this.horseWeight = horseWeight;
@@ -32,19 +32,19 @@ public class Horse {
         this.horseName = horseName;
     }
 
-    public int getHorseHeight() {
+    public Double getHorseHeight() {
         return horseHeight;
     }
 
-    public void setHorseHeight(int horseHeight) {
+    public void setHorseHeight(Double horseHeight) {
         this.horseHeight = horseHeight;
     }
 
-    public int getHorseWeight() {
+    public Double getHorseWeight() {
         return horseWeight;
     }
 
-    public void setHorseWeight(int horseWeight) {
+    public void setHorseWeight(Double horseWeight) {
         this.horseWeight = horseWeight;
     }
 

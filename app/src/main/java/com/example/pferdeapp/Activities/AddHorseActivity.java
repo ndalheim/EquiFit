@@ -85,8 +85,8 @@ public class AddHorseActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 String horseName = mhorseName.getText().toString().trim();
-                int horseHeight = Integer.parseInt(mhorseHeight.getText().toString().trim());
-                int horseWeight = Integer.parseInt(mhorseWeight.getText().toString().trim());
+                Double horseHeight = Double.parseDouble(mhorseHeight.getText().toString().trim());
+                Double horseWeight = Double.parseDouble(mhorseWeight.getText().toString().trim());
                 String horseCondition = mhorseCondition.getSelectedItem().toString();
                 String horseDefect = mhorseDefect.getSelectedItem().toString();
                 String horseIntolerance = mhorseIntolerance.getSelectedItem().toString();
