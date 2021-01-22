@@ -8,23 +8,20 @@ public class Feed {
     private String brand; //Marke
     private String productDescription; //Produktbeschreibung
     private String composition; //Zusammensetzung
-    //private Map<String,int[]> feedingRecommendation; //Fütterungsempfehlung als Faktor
     private String feedingRecommendationDescription; //Fütterungsempfehlung
-    //private Map<String,Map<Double, String>> ingredients; //Inhaltsstoffe
-    private Map<String, Double> ingredients; //Inhaltsstoffe
-    private Map<String, String> ingredientsUnit; //Inhaltsstoffe
+    private Map<String, Object> ingredients; //Inhaltsstoffe
+    //private Map<String,Object> feedingRecommendation; //Fütterungsempfehlung als Faktor
 
     public Feed() {
     }
 
-    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String,Double> ingredients, Map<String,String> ingredientsUnit) {
+    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String, Object> ingredients) {
         this.name = name;
         this.brand = brand;
         this.productDescription = productDescription;
         this.composition = composition;
         this.feedingRecommendationDescription = feedingRecommendationDescription;
         this.ingredients = ingredients;
-        this.ingredientsUnit = ingredientsUnit;
     }
 
     public String getName() {
@@ -67,19 +64,11 @@ public class Feed {
         this.feedingRecommendationDescription = feedingRecommendationDescription;
     }
 
-    public Map<String, Double> getIngredients() {
+    public Map<String, Object> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Map<String, Double> ingredients) {
+    public void setIngredients(Map<String, Object> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public Map<String, String> getIngredientsUnit() {
-        return ingredientsUnit;
-    }
-
-    public void setIngredientsUnit(Map<String, String> ingredientsUnit) {
-        this.ingredientsUnit = ingredientsUnit;
     }
 }

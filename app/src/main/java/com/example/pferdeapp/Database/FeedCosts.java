@@ -4,7 +4,7 @@ public class FeedCosts {
 
     private String name;
     private String brand; //Marke
-    private double price;
+    private double price; //Preis
     private double amount; //Menge/Gewicht
 
     public FeedCosts(String name, String brand, double price, double amount) {

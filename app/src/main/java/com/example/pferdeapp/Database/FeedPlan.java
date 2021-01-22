@@ -6,7 +6,7 @@ public class FeedPlan {
 
     private String horseName;
     private String uid;
-    private Map<String,Map<Integer, Integer>> horseFeedRation;
+    private Map<String,Object> horseFeedRation;
 
 
 }

@@ -44,9 +44,9 @@ public class AddFeedActivity extends AppCompatActivity {
     Button mAddIngredientsBtn, mSaveFeedBtn, mBackToMainBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     //Map<String, Map<Double, String>> ingredients = new HashMap<String, Map<Double, String>>();
-    Map<String, Double> ingredients = new HashMap<String, Double>();
-    Map<String, String> ingredientsUnit = new HashMap<String, String>();
-    Map<Double, String> unit = new HashMap<Double, String>();
+    Map<String, Object> ingredients = new HashMap<>();
+    //Map<String, String> ingredientsUnit = new HashMap<>();
+    //Map<Double, String> unit = new HashMap<Double, String>();
 
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
@@ -94,11 +94,12 @@ public class AddFeedActivity extends AppCompatActivity {
         mAddIngredientsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //unit.put(Double.parseDouble(mIngredientsValue.getText().toString().trim()), mUnit.getSelectedItem().toString());
-                //ingredients.put(mIngredients.getSelectedItem().toString(), unit);
-                ingredients.put(mIngredients.getSelectedItem().toString(), Double.parseDouble(mIngredientsValue.getText().toString().trim()));
-                ingredientsUnit.put(mIngredients.getSelectedItem().toString(), mUnit.getSelectedItem().toString());
+                Map<String, Double> ingredientsUnit = new HashMap<>();
+                ingredientsUnit.put(mUnit.getSelectedItem().toString(),Double.parseDouble(mIngredientsValue.getText().toString().trim()));
+                ingredients.put(mIngredients.getSelectedItem().toString(), ingredientsUnit);
+                Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
                 addIngredientItem(view);
+
             }
         });
 
@@ -129,25 +130,6 @@ public class AddFeedActivity extends AppCompatActivity {
 
     }
 
-    //löscht Inhalsstoffe aus der ListView
-    private void deleteIngredientsItems() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
-                Toast.makeText(getApplicationContext(), items.get(position), Toast.LENGTH_LONG).show();
-                //soll Inhaltstoff aus der Map löschen
-                ingredients.remove(items.get(position).split("  ")[0]);
-                ingredientsUnit.remove(items.get(position).split("  ")[0]);
-
-                items.remove(position);
-                itemsAdapter.notifyDataSetChanged();
-                //Toast.makeText(getApplicationContext(), "Inhaltsstoff aus der Liste gelöscht", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     private void addIngredientItem(View view) {
         String ingredients = mIngredients.getSelectedItem().toString();
         String ingredientsValue = mIngredientsValue.getText().toString().trim();
@@ -163,6 +145,25 @@ public class AddFeedActivity extends AppCompatActivity {
         }
     }
 
+    //löscht Inhalsstoffe aus der ListView
+    private void deleteIngredientsItems() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Toast.makeText(getApplicationContext(), items.get(position), Toast.LENGTH_LONG).show();
+                //soll Inhaltstoff aus der Map löschen
+                ingredients.remove(items.get(position).split("  ")[0]);
+                //ingredientsUnit.remove(items.get(position).split("  ")[0]);
+
+                items.remove(position);
+                itemsAdapter.notifyDataSetChanged();
+                //Toast.makeText(getApplicationContext(), "Inhaltsstoff aus der Liste gelöscht", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void addFeedToFirestore() {
         String feedName = mFeedName.getText().toString().trim();
         String feedBrand = mfeedBrand.getText().toString().trim();
@@ -173,8 +174,8 @@ public class AddFeedActivity extends AppCompatActivity {
         Double feedPrice = Double.parseDouble(mCosts.getText().toString().trim());
 
         if(!(feedName.equals("")||feedBrand.equals("")||productDescription.equals("") ||composition.equals("")
-                ||feedingRecommendationDescription.equals("") ||ingredients.isEmpty()||ingredientsUnit.isEmpty()
-                ||feedAmout.equals("") ||feedPrice.equals(""))){
+                ||feedingRecommendationDescription.equals("") ||ingredients.isEmpty()||ingredients.containsKey("Unit")
+                ||ingredients.containsKey("Value")||feedAmout.equals("") ||feedPrice.equals(""))){
             /**
              Map<String, Double> ingredients = new HashMap<String, Double>();
              ingredients.put(mIngredients.getSelectedItem().toString(), Double.parseDouble(mIngredientsValue.getText().toString().trim()));
@@ -187,7 +188,8 @@ public class AddFeedActivity extends AppCompatActivity {
             }
 
 
-            Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients, ingredientsUnit);
+            Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients);
+            Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
             String documentFeedName = feedName + "_" + feedBrand;
             db.collection("Feed").document(documentFeedName).set(feed)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {

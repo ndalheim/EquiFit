@@ -1,8 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.AddHorseFeedActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddHorseFeed1"
+        android:layout_width="411dp"
+        android:layout_height="43dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAddHorseFeed3">
+
+        <Spinner
+            android:id="@+id/feedSpinner"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints" />
+
+        <Spinner
+            android:id="@+id/numberOfMealsSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/feedInGrammValue"
+            android:layout_width="76dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorDarkGreen"
+            android:digits="0123456789"
+            android:ems="10"
+            android:hint="@string/feed_in_gramm"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="7"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/addFeedWithGrammButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/my_button"
+            android:text="@string/add" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddHorseFeed2"
+        android:layout_width="410dp"
+        android:layout_height="393dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAddHorseFeed1">
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDarkGreen" />
+
+        <ListView
+            android:id="@+id/feed_ration_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAddHorseFeed3"
+        android:layout_width="411dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="175dp"
+            android:layout_height="match_parent"
+            android:text="@string/feed_name" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:text="@string/häufigkeit" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="124dp"
+            android:layout_height="match_parent"
+            android:text="@string/portion" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

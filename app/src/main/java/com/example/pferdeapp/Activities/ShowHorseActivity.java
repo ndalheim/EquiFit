@@ -1,7 +1,10 @@
 package com.example.pferdeapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ public class ShowHorseActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String horseNameString;
     TextView textViewHorseName;
+    Button goToAddFeedBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,15 @@ public class ShowHorseActivity extends AppCompatActivity {
         setContentView(R.layout.acivity_show_horse);
 
         textViewHorseName = findViewById(R.id.horseInformationTextView);
+        goToAddFeedBtn = findViewById(R.id.add_horse_feed_button);
+
+        //Geh zur AddHorseFeedActivity
+        goToAddFeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AddHorseFeedActivity.class));
+            }
+        });
 
 
         if(getIntent().hasExtra("HorseName") == true) {

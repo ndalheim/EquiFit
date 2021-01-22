@@ -37,6 +37,10 @@
     <string name="whichFeedInterested">Welches Futter Interessiert dich?</string>
     <string name="feedCosts">Preis</string>
     <string name="feedAmount">Inhalt in kg</string>
+    <string name="feed_name">Futtername</string>
+    <string name="häufigkeit">Häufigkeit</string>
+    <string name="portion">Portion in Gramm</string>
+    <string name="feed_in_gramm">Gramm</string>
 
     <string-array name="defects_array">
         <item>keine</item>
@@ -103,5 +107,13 @@
         <item>%</item>
         <item>mg/kg</item>
         <item>MJ/kg</item>
+    </string-array>
+
+    <string-array name="number_of_meals_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 </resources>

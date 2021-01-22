@@ -8,7 +8,7 @@ public class Horse {
     private String horseCondition; //Trainingszustand
     private String defect; //Mängel
     private String intolerance; //Intolerant/Allergie
-    private String uid; //Intolerant/Allergie
+    private String uid; //User-ID
 
 
     public Horse() {

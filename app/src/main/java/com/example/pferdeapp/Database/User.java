@@ -4,10 +4,10 @@ import android.widget.ImageView;
 
 public class User {
 
-    private String userName;
-    private String email;
-    private String password;
-    private ImageView userImage;
+    private String userName; //Nutzername
+    private String email; //E-Mail
+    private String password; //Passwort
+    private ImageView userImage; // Profilbild
 
     public User(String userName, String email, String password, ImageView userImage) {
 
