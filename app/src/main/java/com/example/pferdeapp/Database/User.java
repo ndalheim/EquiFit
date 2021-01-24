@@ -13,6 +13,9 @@ public class User {
 
     }
 
+    public User(String userName, String email, String password) {
+
+    }
     public String getUserName() {
         return userName;
     }

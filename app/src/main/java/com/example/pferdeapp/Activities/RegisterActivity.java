@@ -145,8 +145,8 @@ public class RegisterActivity extends AppCompatActivity {
                         userID = firebaseAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = fStore.collection("user").document(userID);
                         Map<String, Object> user = new HashMap<>();
-                        user.put("username", mNutzername);
-                        user.put("email", mEmail);
+                        user.put("username", mNutzername.getText().toString());
+                        user.put("email", mEmail.getText().toString());
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

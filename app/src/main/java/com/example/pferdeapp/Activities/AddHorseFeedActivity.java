@@ -1,5 +1,6 @@
 package com.example.pferdeapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AddHorseFeedActivity extends AppCompatActivity {
+public class AddHorseFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private static final String TAG = "AddHorseFeedActivity";
 
@@ -59,14 +60,17 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
         //Futter
         mFeed = (Spinner) findViewById(R.id.feedSpinner);
-        ArrayAdapter<CharSequence> feedAdapter = ArrayAdapter.createFromResource(this,
-                R.array.defects_array, android.R.layout.simple_spinner_item);
-        mFeed.setAdapter(feedAdapter);
+        mFeed.setOnItemSelectedListener(this);
 
-        /**ArrayAdapter<String> feedAdapter = new ArrayAdapter<String>
+        /**ArrayAdapter<CharSequence> feedAdapter = ArrayAdapter.createFromResource(this,
+                R.array.defects_array, android.R.layout.simple_spinner_item);
+        mFeed.setAdapter(feedAdapter);*/
+
+        ArrayAdapter<String> feedAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item, feedName); //selected item will look like a spinner set from XML
         //feedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mFeed.setAdapter(feedAdapter);*/
+        mFeed.setAdapter(feedAdapter);
+
 
         //-----------------------------
 
@@ -81,6 +85,10 @@ public class AddHorseFeedActivity extends AppCompatActivity {
         //ListView mit Inhaltstoffen
         feedListView = findViewById(R.id.feed_ration_list_view);
         maddFeedWithGrammBtn = findViewById(R.id.addFeedWithGrammButton);
+
+        // Speichern und zurück Button
+        mSaveHorseFeedBtn = findViewById(R.id.save_feed_plan_button);
+        mBackToMainBtn = findViewById(R.id.back_to_horse_information_button);
 
 
         //Inhaltstoffe-Hinzufügen-Button
@@ -101,6 +109,27 @@ public class AddHorseFeedActivity extends AppCompatActivity {
         feedListView.setAdapter(feedItemsAdapter);
 
         deleteFeedItem();
+
+
+        //Zurück-Button zur Main Activity
+        mBackToMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ShowHorseActivity.class));
+            }
+        });
+
+
+        //Futter-Speichern-Button. Speichert Futter in der Datenbank
+        mSaveHorseFeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFeedPlanToFirestore();
+            }
+        });
+    }
+
+    private void addFeedPlanToFirestore() {
     }
 
     private void addFeedItem(View view) {
@@ -168,5 +197,15 @@ public class AddHorseFeedActivity extends AppCompatActivity {
         }
 
     return feedArray;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

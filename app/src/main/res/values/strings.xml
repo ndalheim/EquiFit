@@ -41,6 +41,7 @@
     <string name="häufigkeit">Häufigkeit</string>
     <string name="portion">Portion in Gramm</string>
     <string name="feed_in_gramm">Gramm</string>
+    <string name="add_horse_feed_to_feedplan">Füge das tägliche Futter deines Pferdes dem Futterplan hinzu</string>
 
     <string-array name="defects_array">
         <item>keine</item>
