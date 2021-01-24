@@ -57,18 +57,26 @@ public class AddHorseFeedActivity extends AppCompatActivity implements AdapterVi
         //------------------------------
         feedName = getFeed();
         getNumberOfFeeds(feedName);
+        Toast.makeText(getApplicationContext(), feedRation.toString(), Toast.LENGTH_LONG).show();
 
         //Futter
         mFeed = (Spinner) findViewById(R.id.feedSpinner);
         mFeed.setOnItemSelectedListener(this);
 
-        /**ArrayAdapter<CharSequence> feedAdapter = ArrayAdapter.createFromResource(this,
-                R.array.defects_array, android.R.layout.simple_spinner_item);
+        /**ArrayAdapter feedAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, feedName);
         mFeed.setAdapter(feedAdapter);*/
 
+        /**ArrayAdapter<CharSequence> feedAdapter = ArrayAdapter.createFromResource(this,
+                R.array.defects_array, android.R.layout.simple_spinner_item);*/
+
+
+        Log.d(TAG, "_________________über dem Adapter___" + feedName);
         ArrayAdapter<String> feedAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item, feedName); //selected item will look like a spinner set from XML
-        //feedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        feedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Log.d(TAG, "_________________über dem Adapter2___" + feedName);
+
+
         mFeed.setAdapter(feedAdapter);
 
 
