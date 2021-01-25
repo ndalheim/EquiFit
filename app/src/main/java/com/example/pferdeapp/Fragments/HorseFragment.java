@@ -3,11 +3,8 @@ package com.example.pferdeapp.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.pferdeapp.Activities.AddHorseActivity;
-import com.example.pferdeapp.Activities.AddHorseFeedActivity;
-import com.example.pferdeapp.Activities.FeedInformationActivity;
-import com.example.pferdeapp.Activities.ShowHorseActivity;
+import com.example.pferdeapp.Activities.ShowHorseInformationActivity;
 import com.example.pferdeapp.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,7 +69,7 @@ public class HorseFragment extends Fragment {
 
 
 
-        db.collection("Horse").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("user").document(uid).collection("Horse").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 horseList.clear();
@@ -96,9 +91,12 @@ public class HorseFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Intent intent = new Intent(getActivity(), ShowHorseActivity.class);
+                Intent intent = new Intent(getActivity(), ShowHorseInformationActivity.class);
                 horseNameAndUid = horseList.get(position) + "_" + uid;
-                intent.putExtra("HorseName", horseNameAndUid);
+
+                intent.putExtra("HorseId", horseNameAndUid);
+                intent.putExtra("HorseName", horseList.get(position));
+                intent.putExtra("UserId", uid);
                 startActivity(intent);
 
             }

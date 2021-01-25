@@ -99,7 +99,8 @@ public class AddHorseActivity extends AppCompatActivity{
 
                 Horse horse = new Horse(horseName, horseHeight, horseWeight, horseCondition, horseDefect, horseIntolerance, uid);
                 String documentName = horseName + "_" + uid;
-                db.collection("Horse").document(documentName).set(horse)
+
+                db.collection("user").document(uid).collection("Horse").document(horseName).set(horse)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

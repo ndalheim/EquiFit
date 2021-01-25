@@ -1,5 +1,7 @@
 package com.example.pferdeapp.Database;
 
+import java.util.Map;
+
 public class Horse {
 
     private String horseName; //Name
@@ -9,6 +11,7 @@ public class Horse {
     private String defect; //Mängel
     private String intolerance; //Intolerant/Allergie
     private String uid; //User-ID
+    private Map<String, String> ingredientsPerDay; //User-ID
 
 
     public Horse() {
@@ -78,5 +81,13 @@ public class Horse {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public Map<String, String> getIngredientsPerDay() {
+        return ingredientsPerDay;
+    }
+
+    public void setIngredientsPerDay(Map<String, String> ingredientsPerDay) {
+        this.ingredientsPerDay = ingredientsPerDay;
     }
 }

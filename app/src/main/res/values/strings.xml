@@ -38,10 +38,12 @@
     <string name="feedCosts">Preis</string>
     <string name="feedAmount">Inhalt in kg</string>
     <string name="feed_name">Futtername</string>
-    <string name="häufigkeit">Häufigkeit</string>
-    <string name="portion">Portion in Gramm</string>
+    <string name="häufigkeit">Häufigkeit:</string>
+    <string name="portion">Portion in Gramm:</string>
     <string name="feed_in_gramm">Gramm</string>
     <string name="add_horse_feed_to_feedplan">Füge das tägliche Futter deines Pferdes dem Futterplan hinzu</string>
+    <string name="choose_feed">Wähle ein Futter aus:</string>
+    <string name="calculateIngredients">Futterplan Überprüfen</string>
 
     <string-array name="defects_array">
         <item>keine</item>

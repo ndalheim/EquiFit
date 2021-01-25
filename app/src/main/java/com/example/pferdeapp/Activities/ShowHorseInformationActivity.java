@@ -1,0 +1,164 @@
+package com.example.pferdeapp.Activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pferdeapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShowHorseInformationActivity extends AppCompatActivity {
+    private static final String TAG = "ShowHorseActivity";
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String horseNameString, userId;
+    ListView mfeedListView;
+    TextView textViewHorseName, textViewHorseInformation;
+    Button goToAddFeedBtn, goBackToHorseFragment, mCalculateIngrements;
+    private List<String> feedList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.acivity_show_horse);
+
+        final Intent intent = new Intent(getApplicationContext(), AddHorseFeedActivity.class);
+
+        textViewHorseInformation = findViewById(R.id.horseInformationTextView);
+        textViewHorseName = findViewById(R.id.horse_name_text_view);
+        goToAddFeedBtn = findViewById(R.id.add_horse_feed_button);
+        goBackToHorseFragment = findViewById(R.id.back_to_horse_fragment_button);
+        mfeedListView = findViewById(R.id.horse_feed_plan);
+        mCalculateIngrements = findViewById(R.id.calculate_ingredients_button);
+
+
+        //Geh zur AddHorseFeedActivity
+        goToAddFeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
+
+        //Geh zur AddHorseFeedActivity
+        goBackToHorseFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
+
+
+
+        if(getIntent().hasExtra("HorseName") == true) {
+
+            horseNameString = getIntent().getExtras().getString("HorseName");
+            userId= getIntent().getExtras().getString("UserId");
+
+            mCalculateIngrements.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intentIngredients = new Intent(getApplicationContext(), ShowIngredientsActivity.class);
+
+                    intentIngredients.putExtra("HorseName", horseNameString);
+                    intentIngredients.putExtra("UserId", userId);
+                    startActivity(intentIngredients);
+
+                }
+            });
+
+
+            intent.putExtra("HorseId", horseNameString);
+
+            Log.d(TAG, horseNameString);
+
+            db.collection("user").document(userId).collection("Horse").document(horseNameString).collection("FeedPlan").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    feedList.clear();
+
+                    for (DocumentSnapshot snapshot : documentSnapshot){
+                        if(snapshot.get("feedId") == null){
+                            feedList.add("Füge Futter dem Futterplan hinzu");
+                            Log.d(TAG, "_________________" + feedList.toString());
+
+                        }else{
+                            Log.d(TAG, "_________________" + snapshot);
+                            String[] splitFeedId = snapshot.getString("feedId").split("_");
+
+                            feedList.add(splitFeedId[1] + ": " + splitFeedId[0] + " "  + snapshot.get("numberOfMeals") + "x tägl. " + snapshot.get("feedInGram")  + "g");
+                            Log.d(TAG, "_________________" +  feedList.toString());
+                        }
+
+
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
+                    adapter.notifyDataSetChanged();
+                    mfeedListView.setAdapter(adapter);
+                }
+            });
+
+            db.collection("user").document(userId).collection("Horse").document(horseNameString).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String horseName = document.getString("horseName");
+                            double helpValue = document.getDouble("horseHeight");
+                            String horseHeight = String.valueOf((int) helpValue);
+                            double helpValue2 = document.getDouble("horseWeight");
+                            String horseWeight = String.valueOf((int) helpValue2);
+                            String horseCondition = document.getString("horseCondition");
+                            String defect = document.getString("defect");
+                            String intolerance = document.getString("intolerance");
+
+                            textViewHorseName.setText(horseName);
+
+                            textViewHorseInformation.setText("Name: " + horseName + "\n"
+                                    + "Stockmaß: " + horseHeight + " cm" +"\n"
+                                    + "Gewicht: " + horseWeight + " kg" + "\n"
+                                    + "Trainingszustand: " + horseCondition + "\n"
+                                    + "Mangel: " + defect + "\n"
+                                    + "Intoleranz: " + intolerance + "\n");
+
+                            intent.putExtra("HorseName", horseName);
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Toast.makeText(ShowHorseInformationActivity.this, "Dokument existiert nicht", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Toast.makeText(ShowHorseInformationActivity.this, "task fehlgeschlagen", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }else{
+            Toast.makeText(ShowHorseInformationActivity.this, "Daten wurden nicht übergeben", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+}

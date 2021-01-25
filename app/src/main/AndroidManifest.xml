@@ -29,7 +29,8 @@
         <activity android:name=".Activities.AddFeedActivity" />
         <activity android:name=".Activities.AddHorseFeedActivity" />
         <activity android:name=".Activities.FeedInformationActivity" />
-        <activity android:name=".Activities.ShowHorseActivity" />
+        <activity android:name=".Activities.ShowHorseInformationActivity" />
+        <activity android:name=".Activities.ShowIngredientsActivity" />
         <activity android:name=".ImageToText"/>
         <activity android:name=".ForgotPassword" />
 

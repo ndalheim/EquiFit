@@ -1,6 +1,5 @@
 package com.example.pferdeapp.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,11 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pferdeapp.Database.Feed;
 import com.example.pferdeapp.Database.FeedCosts;
 import com.example.pferdeapp.R;
+import com.example.pferdeapp.hilfsklassen.HorseFeedHelpClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,8 +95,9 @@ public class AddFeedActivity extends AppCompatActivity {
         mAddIngredientsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Double> ingredientsUnit = new HashMap<>();
-                ingredientsUnit.put(mUnit.getSelectedItem().toString(),Double.parseDouble(mIngredientsValue.getText().toString().trim()));
+                Map<String, String> ingredientsUnit = new HashMap<>();
+                ingredientsUnit.put(mUnit.getSelectedItem().toString(),mIngredientsValue.getText().toString().trim());
+                //ingredientsUnit.put("unit",mUnit.getSelectedItem().toString());
                 ingredients.put(mIngredients.getSelectedItem().toString(), ingredientsUnit);
                 Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
                 addIngredientItem(view);
@@ -191,12 +193,16 @@ public class AddFeedActivity extends AppCompatActivity {
             Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients);
             Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
             String documentFeedName = feedName + "_" + feedBrand;
+
+            HorseFeedHelpClass.addFeedNameToStringArray(documentFeedName);
+
             db.collection("Feed").document(documentFeedName).set(feed)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(AddFeedActivity.this, "Futter erfolgreich hochgeladen!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "addFeed: success");
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

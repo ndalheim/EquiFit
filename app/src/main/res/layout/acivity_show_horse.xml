@@ -4,39 +4,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activities.ShowHorseActivity">
+    tools:context=".Activities.ShowHorseInformationActivity">
 
     <TextView
         android:id="@+id/horseTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Das ist dein Pferd"
+        android:text="Das sind alle Informationen über: "
         app:layout_constraintBottom_toTopOf="@+id/add_horse_feed_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.116" />
 
-    <TextView
-        android:id="@+id/horseInformationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horseTextView" />
 
     <Button
-        android:id="@+id/add_horse_feed_button"
+        android:id="@+id/back_to_horse_fragment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/my_button"
-        android:text="@string/add_feed_to_feed_plan"
+        android:text="@string/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/save_horse_information_button"
+        app:layout_constraintHorizontal_bias="0.398"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horse_intolerance"
+        app:layout_constraintVertical_bias="0.197" />
+
+    <Button
+    android:id="@+id/add_horse_feed_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="48dp"
+    android:background="@drawable/my_button"
+    android:text="@string/add_feed"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/back_to_horse_fragment_button" />
+
+    <Button
+        android:id="@+id/calculate_ingredients_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="136dp"
+        android:background="@drawable/my_button"
+        android:text="@string/calculateIngredients"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintStart_toEndOf="@+id/back_to_horse_fragment_button" />
+
+    <TextView
+        android:id="@+id/horse_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/add_horse_feed_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintStart_toEndOf="@+id/horseTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116" />
+
+
+    <LinearLayout
+        android:layout_width="352dp"
+        android:layout_height="426dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="315dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/add_horse_feed_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horseTextView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/horseInformationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp" />
+
+        <ListView
+            android:id="@+id/horse_feed_plan"
+            android:layout_width="match_parent"
+            android:layout_height="339dp"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="321dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -106,7 +106,7 @@
         tools:layout="@layout/activity_feed_information" />
     <activity
         android:id="@+id/showHorseActivity"
-        android:name="com.example.pferdeapp.Activities.ShowHorseActivity"
+        android:name="com.example.pferdeapp.Activities.ShowHorseInformationActivity"
         android:label="acivity_show_horse"
         tools:layout="@layout/acivity_show_horse" >
         <action
