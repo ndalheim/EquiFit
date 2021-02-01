@@ -6,12 +6,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.ShowIngredientsActivity">>
 
-    <TextView
-        android:id="@+id/ingredients_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <LinearLayout
+        android:layout_width="381dp"
+        android:layout_height="650dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/add_horse_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/deine_pferde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_ingredients" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDarkGreen"
+            android:clickable="false" />
+
+        <TextView
+            android:id="@+id/ingredients_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

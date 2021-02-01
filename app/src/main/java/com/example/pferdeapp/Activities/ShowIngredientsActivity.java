@@ -60,12 +60,8 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-
-                    //Log.d(TAG, "_______________________" + documentSnapshot);
                     Map<String, Double> feedInGramMap = new HashMap<>();
                     Double gramsPerDay;
-
-
 
                     for (DocumentSnapshot snapshot : documentSnapshot) {
 
@@ -83,51 +79,10 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
                 }
 
-
-
-
             });
-
-
-
-            /**db.collection("user").document(userId).collection("Horse").document(horseNameString).collection("FeedPlan").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            String feedId = document.getString("feedId");
-                            double feedInGram = document.getDouble("feedInGram");
-                            double numberOfMeals = document.getDouble("numberOfMeals");
-
-
-                            textViewIngredientsInformation.setText("Name: " + horseName + "\n"
-                                    + "Stockmaß: " + horseHeight + " cm" + "\n"
-                                    + "Gewicht: " + horseWeight + " kg" + "\n"
-                                    + "Trainingszustand: " + horseCondition + "\n"
-                                    + "Mangel: " + defect + "\n"
-                                    + "Intoleranz: " + intolerance + "\n");
-
-
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        } else {
-                            Toast.makeText(ShowIngredientsActivity.this, "Dokument existiert nicht", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Toast.makeText(ShowIngredientsActivity.this, "task fehlgeschlagen", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });*/
         } else {
             Toast.makeText(ShowIngredientsActivity.this, "Daten wurden nicht übergeben", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
     }
 
     //Rechnet alle Inhaltsstoffe von dem Futterplan von einem Pferd zusammen (Angaben in g pro Tag) und schreibt es in einer Map in die Datenbank zu dem Pferd
@@ -160,19 +115,15 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
                                 if(m.getKey().equals("%")){
                                     percentInGram = Double.parseDouble(m.getValue().toString()) * 10;
-                                    //Log.d(TAG, "_______________________#ingramm" + percentInGram);
                                 }else{
                                     percentInGram = Double.parseDouble(m.getValue().toString());
                                 }
                                 gramPerDay = percentInGram * gramsPerDay / 1000;
-                                //Log.d(TAG, "_______________________pro Tag#" + gramPerDay);
 
                                 if (mcalculatedIngredients.containsKey(e.getKey().toString())){
                                     Double test = mcalculatedIngredients.get(e.getKey().toString());
 
                                     mcalculatedIngredients.put(e.getKey().toString(), gramPerDay + test);
-                                    //Log.d(TAG, "_______________________Rohproten#" + mcalculatedIngredients);
-
 
                                 }else{
                                     mcalculatedIngredients.put(e.getKey().toString(), gramPerDay);
@@ -181,13 +132,13 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
                             }
 
-                            //Log.d(TAG, "_______________________TestMap#" + mcalculatedIngredients);
-
                             final FirebaseFirestore db2 = FirebaseFirestore.getInstance();
 
+                            //Setzt Inhaltsstoffe von einem Pferd Pro Tag
                             db2.collection("user").document(userId).collection("Horse")
                                     .document(horseName).update("ingredientsPerDay", mcalculatedIngredients);
 
+                            //liest HorseWeight aus der Datenbank aus
                             db2.collection("user").document(userId).collection("Horse").document(horseName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -195,8 +146,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
                                              Double horseWeight = document.getDouble("horseWeight");
-
-                                            //Log.d(TAG, "******************* " + horseWeight);
 
                                             showHorseIngredients(mcalculatedIngredients, horseWeight);
                                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
@@ -244,6 +193,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                     min = 25.0;
                     max = 35.0;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
+                    //Log.d(TAG, "_______________________#ingredients  Calcium");
                     break;
                 case "Zink":
                     min = 70 * horseWeight;
@@ -254,26 +204,30 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                     min = 10 * horseWeight;
                     max = 15 * horseWeight;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
+                    break;
                 case "Natrium":
                     min = 2 * horseWeight;
                     max = 7 * horseWeight;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
+                    break;
                 case "Chlorid":
                     min = 8 * horseWeight;
                     max = 17 * horseWeight;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
+                    break;
                 case "Selen":
                     min = 1.1;
                     max = 1.8;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
+                    break;
                 case "Carnitin":
                     min = 3.0;
                     max = 10.0;
                     ingentsientsText = checkIngredientsValue(key, valueAsDouble, min, max, ingentsientsText);
-
                     break;
                 default:
-                    ingentsientsText+= key + ": " + value + "\n";
+                    double roundOff = Math.round(valueAsDouble * 100.0) / 100.0;
+                    ingentsientsText+= key + ": " + roundOff + "\n";
                     break;
             }
 
@@ -286,12 +240,14 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     private String checkIngredientsValue(String key, Double value,  Double x, Double y, String ingentsientsText) {
 
+        double roundOff = Math.round(value * 100.0) / 100.0;
+        Log.d(TAG, "_______________________#ingramm" + roundOff);
         if ((value > x) && (value < y)){
-            ingentsientsText+= key + ": " + value + "\n";
-        }else if((value < 25)){
-            ingentsientsText += key + ": " + value + " Wert sollte über 25 sein\n";
+            ingentsientsText+= key + ": " + roundOff + "Wert perfekt\n";
+        }else if((value < x)){
+            ingentsientsText += key + ": " + roundOff + " Wert zu niedrig\n";
         }else{
-            ingentsientsText += key + ": " + value + " Wert sollte unter 35 sein\n";
+            ingentsientsText += key + ": " + roundOff + " Wert zu hoch\n";
         }
 
         return ingentsientsText;

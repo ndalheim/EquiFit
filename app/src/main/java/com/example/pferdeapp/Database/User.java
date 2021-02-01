@@ -9,13 +9,12 @@ public class User {
     private String password; //Passwort
     private ImageView userImage; // Profilbild
 
-    public User(String userName, String email, String password, ImageView userImage) {
 
+    public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
     }
 
-    public User(String userName, String email, String password) {
-
-    }
     public String getUserName() {
         return userName;
     }

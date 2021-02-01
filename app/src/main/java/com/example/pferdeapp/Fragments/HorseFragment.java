@@ -67,24 +67,7 @@ public class HorseFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
-
-
-        db.collection("user").document(uid).collection("Horse").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                horseList.clear();
-
-                for (DocumentSnapshot snapshot : documentSnapshot){
-                    if(uid.equals(snapshot.getString("uid"))){
-                        horseList.add(snapshot.getString("horseName"));
-                    }
-
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_selectable_list_item, horseList);
-                adapter.notifyDataSetChanged();
-                listView.setAdapter(adapter);
-            }
-        });
+        showHorses(uid);
 
         //
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,6 +86,28 @@ public class HorseFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void showHorses(final String uID) {
+        db.collection("user").document(uid).collection("Horse")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        horseList.clear();
+                        // Schleife die alle Pferde des Users der Liste hinzufügt (die Pferdenamen)
+                        for (DocumentSnapshot snapshot : documentSnapshot){
+                            if(uID.equals(snapshot.getString("uid"))){
+                                horseList.add(snapshot.getString("horseName"));
+                            }
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity()
+                                .getApplicationContext(),
+                                android.R.layout.simple_selectable_list_item, horseList);
+                        adapter.notifyDataSetChanged();
+                        // Liste der Pfertde wird angezeigt
+                        listView.setAdapter(adapter);
+                    }
+                });
     }
 
     /**

@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         fStore = FirebaseFirestore.getInstance();
 
-
+        // Wenn ein Nutzer eingeloggt ist springe direkt zur Main Activity
         if(firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
@@ -82,13 +82,11 @@ public class RegisterActivity extends AppCompatActivity {
                     mPasswort_wiederholen.setText("");
                     return;
                 }
-
                 if (TextUtils.isEmpty(passwort) ) {
                     mPasswort.setError("Passwort fehlt");
                     mPasswort_wiederholen.setText("");
                     return;
                 }
-
                 if (TextUtils.isEmpty(passwort2) ) {
                     mPasswort_wiederholen.setError("Passwort fehlt");
                     mPasswort.setText("");
@@ -110,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                //Überprüft ob das Passwort länger als 6 Zeichen hat
                 if(passwort.length() < 6 ){
                     mPasswort.setError("Passwort muss länger als 6 Zeichen sein");
 
@@ -121,53 +120,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                // den User in Firebase registrieren
-                firebaseAuth.createUserWithEmailAndPassword(email, passwort).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        //Verifizierungslink für neuen User schicken
-                        FirebaseUser fUser = firebaseAuth.getCurrentUser();
-                        fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(RegisterActivity.this, "Email wurde versandt", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                //Log.d(TAG, "onFailure:Email not sent"+ e.getMessage());
-                                
-                            }
-                        });
-
-
-                        userID = firebaseAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = fStore.collection("user").document(userID);
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("username", mNutzername.getText().toString());
-                        user.put("email", mEmail.getText().toString());
-                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "onSuccess: User profil is created for " + userID);
-                            }
-                        });
-
-
-
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "User ist registriert", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                        }else {
-                            Toast.makeText(RegisterActivity.this, "Es ist ein Fehler aufgetreten!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                            mPasswort.setText("");
-                            mPasswort_wiederholen.setText("");
-                        }
-                    }
-                });
+                //Methode aufrufen die einen Nutzer der Datenbank hinzufügt
+                registerUser(email, passwort);
 
             }
 
@@ -180,5 +134,61 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void registerUser(final String mail, String password) {
+
+        // User in Firebase mit E-Mail-Adresse und Passwort registrieren
+        firebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                //Verifizierungslink an den User schicken der sich gerade registriert hat
+                FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(RegisterActivity.this, "Email wurde versandt", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure:Email not sent"+ e.getMessage());
+
+                    }
+                });
+
+                // Dem Nutzer in der Datenbank die E-Mail-Adressse und das Passwort hinzufügen
+                userID = firebaseAuth.getCurrentUser().getUid();
+                DocumentReference documentReference = fStore.collection("user").document(userID);
+                Map<String, Object> user = new HashMap<>();
+                user.put("username", mNutzername.getText().toString());
+                user.put("email", mEmail.getText().toString());
+                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: User profil is created for " + userID + "with mail: " + mail);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.toString());
+
+                    }
+                });
+
+
+                if (task.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "User ist registriert", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                }else {
+                    Toast.makeText(RegisterActivity.this, "Es ist ein Fehler aufgetreten!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    mPasswort.setText("");
+                    mPasswort_wiederholen.setText("");
+                }
+            }
+        });
     }
 }
