@@ -205,7 +205,10 @@ public class AddHorseFeedActivity extends AppCompatActivity {
             uId = user.getUid();
         }
 
-        if(!(feedId.equals("") || numberOfMeals.equals("") || feedInGram.equals(""))){
+
+        if(feedId == null){
+            Toast.makeText(AddHorseFeedActivity.this, "Es wurde kein Futter ausgewählt", Toast.LENGTH_SHORT).show();
+        }else if(!(feedId.equals("") || numberOfMeals.equals("") || feedInGram.equals(""))){
 
             FeedPlan feedPlan = new FeedPlan(feedId, numberOfMeals, feedInGram);
 

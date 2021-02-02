@@ -4,24 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activities.ShowIngredientsActivity">>
+    tools:context=".Activities.ShowIngredientsActivity">
 
+    <TextView
+        android:id="@+id/deine_pferde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_ingredients"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="381dp"
-        android:layout_height="650dp"
-        android:layout_marginTop="30dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="383dp"
+        android:layout_height="617dp"
+        android:layout_marginTop="56dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/add_horse_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/deine_pferde"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/your_ingredients" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtitem"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Inhaltsstoff" />
+
+            <TextView
+                android:id="@+id/txtitem2"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="Pro Tag" />
+
+            <TextView
+                android:id="@+id/txtitem3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Optimal" />
+
+        </LinearLayout>
+
 
         <View
             android:id="@+id/divider"
@@ -29,6 +60,12 @@
             android:layout_height="1dp"
             android:background="@color/colorDarkGreen"
             android:clickable="false" />
+
+
+        <ListView
+            android:id="@+id/ingredients_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="524dp" />
 
         <TextView
             android:id="@+id/ingredients_text_view"
@@ -38,6 +75,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

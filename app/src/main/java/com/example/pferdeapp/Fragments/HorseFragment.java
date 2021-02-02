@@ -69,7 +69,7 @@ public class HorseFragment extends Fragment {
 
         showHorses(uid);
 
-        //
+        // geht beim Klicken auf ein ListenItem (Pferd) zu der ShowHorseInformationActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -77,6 +77,7 @@ public class HorseFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ShowHorseInformationActivity.class);
                 horseNameAndUid = horseList.get(position) + "_" + uid;
 
+                // Übergibt der nächsten Activity Informationen
                 intent.putExtra("HorseId", horseNameAndUid);
                 intent.putExtra("HorseName", horseList.get(position));
                 intent.putExtra("UserId", uid);
