@@ -139,8 +139,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="320dp"
-        android:layout_height="255dp"
+        android:layout_width="324dp"
+        android:layout_height="284dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,21 @@
         <ListView
             android:id="@+id/ingredients_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="235dp"></ListView>
+
+        <Button
+            android:id="@+id/save_json_button"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/add_json"
+            android:layout_marginStart="88dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/my_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.148" />/>
 
     </LinearLayout>
 

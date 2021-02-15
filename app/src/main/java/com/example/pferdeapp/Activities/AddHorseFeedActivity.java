@@ -22,6 +22,10 @@ import com.example.pferdeapp.Database.FeedCosts;
 import com.example.pferdeapp.Database.FeedPlan;
 import com.example.pferdeapp.Database.Horse;
 import com.example.pferdeapp.R;
+import com.example.pferdeapp.hilfsklassen.AddFeedAdapter;
+import com.example.pferdeapp.hilfsklassen.AddFeedListModel;
+import com.example.pferdeapp.hilfsklassen.FeedPlanAdapter;
+import com.example.pferdeapp.hilfsklassen.FeedPlanListModel;
 import com.example.pferdeapp.hilfsklassen.HorseFeedHelpClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -59,7 +63,8 @@ public class AddHorseFeedActivity extends AppCompatActivity {
     String feedRationItem, feedId, horseId, horseName, feedName;
     Map<String, Object> feedRation = new HashMap<>();
 
-    private List<String> feedList = new ArrayList<>();
+    ArrayList<AddFeedListModel> feedPlanList;
+    AddFeedAdapter feedPlanAdapter;
 
 
     @Override
@@ -69,33 +74,9 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
 
         mfeedListView = findViewById(R.id.feed_list);
-
-
-        //------------------------------
-        //feedName = getFeed();
-        //getNumberOfFeeds(feedName);
-        Toast.makeText(getApplicationContext(), feedRation.toString(), Toast.LENGTH_LONG).show();
-
-        //Futter
-        //mFeed = (Spinner) findViewById(R.id.feedSpinner);
-        //mFeed.setOnItemSelectedListener(this);
-
-        /**ArrayAdapter feedAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, feedName);
-        mFeed.setAdapter(feedAdapter);*/
-
-        /**ArrayAdapter<CharSequence> feedAdapter = ArrayAdapter.createFromResource(this,
-                R.array.defects_array, android.R.layout.simple_spinner_item);*/
-
-        /**feedName = HorseFeedHelpClass.getFeedNames();
-
-        ArrayAdapter<String> feedAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, feedName); //selected item will look like a spinner set from XML
-        feedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mFeed.setAdapter(feedAdapter);*/
-
-
-        //-----------------------------
+        feedPlanList = new ArrayList<>();
+        feedPlanAdapter = new AddFeedAdapter(this, R.layout.list_item, feedPlanList);
+        mfeedListView.setAdapter(feedPlanAdapter);
 
         mFeedInGram = findViewById(R.id.feedInGrammValue);
 
@@ -105,45 +86,32 @@ public class AddHorseFeedActivity extends AppCompatActivity {
         mNumberOfMeals.setAdapter(numberOfMealsAdapter);
 
 
-        //ListView mit Inhaltstoffen
-        //feedPlanListView = findViewById(R.id.feed_ration_list_view);
-        //maddFeedWithGrammBtn = findViewById(R.id.addFeedWithGrammButton);
-
         // Speichern und zurück Button
         mSaveHorseFeedBtn = findViewById(R.id.save_feed_plan_button);
         mBackToMainBtn = findViewById(R.id.back_to_horse_information_button);
 
 
-        //Inhaltstoffe-Hinzufügen-Button
-        /**maddFeedWithGrammBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Map<String, Double> feedWithGramm = new HashMap<>();
-                feedWithGramm.put("NumberOfMeals",Double.parseDouble(mNumberOfMeals.getSelectedItem().toString()));
-                feedWithGramm.put("feedInGram",Double.parseDouble(mFeedInGram.getText().toString().trim()));
-                feedRation.put(feedId, feedWithGramm);
-                Toast.makeText(getApplicationContext(), feedRation.toString(), Toast.LENGTH_LONG).show();
-                addFeedItem(view);
-
-            }
-        });*/
-
-        /**feedItems = new ArrayList<>();
-        feedItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, feedItems);
-        feedPlanListView.setAdapter(feedItemsAdapter);*/
-
         db.collection("Feed").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                feedList.clear();
+                feedPlanList.clear();
+                AddFeedListModel feedPlan;
 
                 for (DocumentSnapshot snapshot : documentSnapshot){
-                    //feedList.add(snapshot.getString("horseName"));
-                    feedList.add(snapshot.getId());
+                    if(snapshot.getId() == null){
+                        feedPlan = new AddFeedListModel("Füge Futter dem Futterplan hinzu");
+                        feedPlanList.add(feedPlan);
+
+                    }else{
+                        Log.d(TAG, "onEvent: --------------" + snapshot.getId().toString());
+                        String[] splitFeedId = snapshot.getId().toString().split("_");
+                        feedPlan = new AddFeedListModel(splitFeedId[1],  splitFeedId[0], snapshot.getId());
+
+                        feedPlanList.add(feedPlan);
+                        Log.d(TAG, "_________________" +  feedPlanList.toString());
+                    }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
-                adapter.notifyDataSetChanged();
-                mfeedListView.setAdapter(adapter);
+                feedPlanAdapter.notifyDataSetChanged();
             }
         });
 
@@ -156,17 +124,14 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
                 for (int i = 0; i < mfeedListView.getChildCount(); i++) {
                     if(position == i ){
-                        mfeedListView.getChildAt(i).setBackgroundColor(Color.BLUE);
-                        feedId = feedList.get(position);
+                        mfeedListView.getChildAt(i).setBackgroundColor(Color.parseColor("#F19817"));
+                        feedId = feedPlanList.get(position).getFeedID();
                     }else{
                         mfeedListView.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
                     }
                 }
             }
         });
-
-        //deleteFeedItem();
-
 
         //Zurück-Button zur Main Activity
         mBackToMainBtn.setOnClickListener(new View.OnClickListener() {
@@ -196,8 +161,13 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
     private void addFeedPlanToFirestore() {
 
-        Double numberOfMeals = Double.parseDouble(mNumberOfMeals.getSelectedItem().toString());
-        Double feedInGram = Double.parseDouble(mFeedInGram.getText().toString().trim());
+        Double numberOfMeals = null;
+        Double feedInGram = null;
+
+        if (!(mNumberOfMeals.getSelectedItem().toString().equals("")||mFeedInGram.getText().toString().trim().equals(""))){
+            numberOfMeals = Double.parseDouble(mNumberOfMeals.getSelectedItem().toString());
+            feedInGram = Double.parseDouble(mFeedInGram.getText().toString().trim());
+        }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uId = null;
@@ -208,7 +178,7 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
         if(feedId == null){
             Toast.makeText(AddHorseFeedActivity.this, "Es wurde kein Futter ausgewählt", Toast.LENGTH_SHORT).show();
-        }else if(!(feedId.equals("") || numberOfMeals.equals("") || feedInGram.equals(""))){
+        }else if(!(feedId.equals("") || numberOfMeals==null || feedInGram==null)){
 
             FeedPlan feedPlan = new FeedPlan(feedId, numberOfMeals, feedInGram);
 
@@ -217,7 +187,7 @@ public class AddHorseFeedActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(AddHorseFeedActivity.this, "Futterplan erfolgreich hochgeladen!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddHorseFeedActivity.this, "Futter erfolgreich im Futterplan hochgeladen!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "addFeedPlan: success");
                         }
                     })
@@ -232,80 +202,7 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }else{
-            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder für den Futterplan aus", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder für das Futter aus", Toast.LENGTH_LONG).show();
         }
-
-
     }
-
-    /**private void addFeedItem(View view) {
-        String feedInGramm = mFeedInGram.getText().toString().trim();
-        String numberOfMeals = mNumberOfMeals.getSelectedItem().toString();
-
-        feedRationItem = feedId + "  " + numberOfMeals + "x tägl. " +feedInGramm + "g";
-
-        if (!(feedId.equals("")||feedInGramm.equals("")||numberOfMeals.equals(""))){
-            feedItemsAdapter.add(feedRationItem);
-            mFeedInGram.setText("");
-        }else{
-            Toast.makeText(getApplicationContext(), "Bitte fülle alle Felder aus", Toast.LENGTH_LONG).show();
-        }
-    }*/
-
-    //löscht Inhalsstoffe aus der ListView
-    /**private void deleteFeedItem() {
-        feedPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
-                Toast.makeText(getApplicationContext(), feedItems.get(position), Toast.LENGTH_LONG).show();
-                //soll Inhaltstoff aus der Map löschen
-                feedRation.remove(feedItems.get(position).split("  ")[0]);
-                //ingredientsUnit.remove(items.get(position).split("  ")[0]);
-
-                feedItems.remove(position);
-                feedItemsAdapter.notifyDataSetChanged();
-                //Toast.makeText(getApplicationContext(), "Inhaltsstoff aus der Liste gelöscht", Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
-
-    /**public void getFeed() {
-        final ArrayList<String> feed = new ArrayList<>();
-        db.collection("Feed").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<String> ids = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        document.getId();
-                        //Log.d(TAG, "_________________#####" + document.getId());
-                        //feed.add((String) document.get("name"));
-
-                    }
-                }
-                //mFeed = (Spinner) findViewById(R.id.feedSpinner);
-                //ArrayAdapter<CharSequence> unitAdapter = ArrayAdapter.createFromResource(this, ids, android.R.layout.simple_spinner_item);
-                //mFeed.setAdapter(unitAdapter);
-            }
-        });
-        //return feed;
-    }*/
-
-
-
-
-    /**public  String[] getNumberOfFeeds(ArrayList<String> feed) {
-        String[] feedArray = new String[feed.size()];
-        Log.d(TAG, "_________________" + feed.size());
-        for (int i = 0; i < feed.size(); i++) {
-            feedArray[i] = feed.get(i);
-
-        }
-
-    return feedArray;
-    }*/
-
-
 }

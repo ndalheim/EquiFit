@@ -45,6 +45,7 @@
     <string name="choose_feed">Wähle ein Futter aus:</string>
     <string name="calculateIngredients">Futterplan Überprüfen</string>
     <string name="your_ingredients">Folgende Inhaltstoffe bekommt sein Pferd pro Tag:</string>
+    <string name="add_json">Füge JSON der Datenbank hinzu</string>
 
     <string-array name="defects_array">
         <item>keine</item>

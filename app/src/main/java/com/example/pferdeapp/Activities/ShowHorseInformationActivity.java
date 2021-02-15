@@ -1,5 +1,6 @@
 package com.example.pferdeapp.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,15 +8,24 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pferdeapp.Database.Feed;
 import com.example.pferdeapp.R;
+import com.example.pferdeapp.hilfsklassen.ChangeFeedplanDialog;
+import com.example.pferdeapp.hilfsklassen.DeleteDialog;
+import com.example.pferdeapp.hilfsklassen.FeedPlanAdapter;
+import com.example.pferdeapp.hilfsklassen.FeedPlanListModel;
+import com.example.pferdeapp.hilfsklassen.IngredientsAdapter;
+import com.example.pferdeapp.hilfsklassen.IngredientsListModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,8 +44,10 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
     String horseNameString, userId;
     ListView mfeedListView;
     TextView textViewHorseName, textViewHorseInformation;
-    Button goToAddFeedBtn, goBackToHorseFragment, mCalculateIngrements;
-    private List<String> feedList = new ArrayList<>();
+    Button goToAddFeedBtn, goBackToHorseFragmentBtn, mCalculateIngrementsBtn;
+    //private List<String> feedList = new ArrayList<>();
+    ArrayList<FeedPlanListModel> feedPlanList;
+    FeedPlanAdapter feedPlanAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +60,13 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
         textViewHorseInformation = findViewById(R.id.horseInformationTextView);
         textViewHorseName = findViewById(R.id.horse_name_text_view);
         goToAddFeedBtn = findViewById(R.id.add_horse_feed_button);
-        goBackToHorseFragment = findViewById(R.id.back_to_horse_fragment_button);
+        goBackToHorseFragmentBtn = findViewById(R.id.back_to_horse_fragment_button);
         mfeedListView = findViewById(R.id.horse_feed_plan);
-        mCalculateIngrements = findViewById(R.id.calculate_ingredients_button);
+        mCalculateIngrementsBtn = findViewById(R.id.calculate_ingredients_button);
+
+        feedPlanList = new ArrayList<>();
+        feedPlanAdapter = new FeedPlanAdapter(this, R.layout.list_item, feedPlanList);
+        mfeedListView.setAdapter(feedPlanAdapter);
 
 
         //Geh zur AddHorseFeedActivity
@@ -62,7 +78,7 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
         });
 
         //Geh zur AddHorseFeedActivity
-        goBackToHorseFragment.setOnClickListener(new View.OnClickListener() {
+        goBackToHorseFragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -76,7 +92,7 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
             horseNameString = getIntent().getExtras().getString("HorseName");
             userId= getIntent().getExtras().getString("UserId");
 
-            mCalculateIngrements.setOnClickListener(new View.OnClickListener() {
+            mCalculateIngrementsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -94,33 +110,60 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
 
             Log.d(TAG, horseNameString);
 
+            // geht beim Klicken auf ein ListenItem (Futter) werden die Futterinformationen geöffnet
+            mfeedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Intent intent = new Intent(getApplicationContext(), FeedInformationActivity.class);
+                    intent.putExtra("DocumentName", feedPlanList.get(position).getFeedID());
+                    startActivity(intent);
+                }
+            });
+
+
+            // Beim  langen Klicken auf ein ListenItem (Futter) wird ein Dialog Fenster geöffnet indem der Nutzer das Futter aus dem Futterplan löschen kann
+            mfeedListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    DeleteDialog deleteDialog = new DeleteDialog();
+                    deleteDialog.setFeedName(feedPlanList.get(i).getFeedID());
+                    deleteDialog.setFeedFromHorse(horseNameString);
+                    deleteDialog.show(getSupportFragmentManager(), "test");
+                    return false;
+                }
+            });
+
+            //Füllt die ListView mit den Datenbankeinträgen von den Futterplan
             db.collection("user").document(userId).collection("Horse").document(horseNameString).collection("FeedPlan").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                    feedList.clear();
+                    feedPlanList.clear();
+                    FeedPlanListModel feedPlan;
 
                     for (DocumentSnapshot snapshot : documentSnapshot){
                         if(snapshot.get("feedId") == null){
-                            feedList.add("Füge Futter dem Futterplan hinzu");
-                            Log.d(TAG, "_________________" + feedList.toString());
+                            feedPlan = new FeedPlanListModel("Füge Futter dem Futterplan hinzu");
+                            feedPlanList.add(feedPlan);
+                            Log.d(TAG, "_________________" + feedPlanList.toString());
 
                         }else{
                             Log.d(TAG, "_________________" + snapshot);
                             String[] splitFeedId = snapshot.getString("feedId").split("_");
 
-                            feedList.add(splitFeedId[1] + ": " + splitFeedId[0] + " "  + snapshot.get("numberOfMeals") + "x tägl. " + snapshot.get("feedInGram")  + "g");
-                            Log.d(TAG, "_________________" +  feedList.toString());
+                            String ration = snapshot.get("numberOfMeals").toString() + "x tägl. " + snapshot.get("feedInGram").toString()  + "g";
+                            feedPlan = new FeedPlanListModel(splitFeedId[1],  splitFeedId[0],  ration , snapshot.getString("feedId"));
+
+                            feedPlanList.add(feedPlan);
+                            Log.d(TAG, "_________________" +  feedPlanList.toString());
                         }
-
-
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
-                    adapter.notifyDataSetChanged();
-                    mfeedListView.setAdapter(adapter);
+                    feedPlanAdapter.notifyDataSetChanged();
                 }
             });
 
-            db.collection("user").document(userId).collection("Horse").document(horseNameString).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            //Liest die Pferdeinformationen aus der Datenbank aus und zeigt sie in der Activity an
+            db.collection("user").document(userId).collection("Horse").document(horseNameString).get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {

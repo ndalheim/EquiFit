@@ -19,6 +19,7 @@ import com.example.pferdeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
+    TextInputLayout emailLayot, passwordLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mEmail = findViewById(R.id.email);
+        emailLayot = findViewById(R.id.email_layout);
         mPassword = findViewById(R.id.passwort);
+        passwordLayout = findViewById(R.id.passwort_layout);
         firebaseAuth = firebaseAuth.getInstance();
         mLoginBtn = findViewById(R.id.login_button);
         mRegisterBtn = findViewById(R.id.go_to_register);
@@ -65,19 +69,22 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Überprüfe ob alle Felder ausgefüllt sind
                 if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email adresse fehlt");
+                    emailLayot.setError("Email adresse fehlt");
+                    //mEmail.setError("Email adresse fehlt");
                     mPassword.setText("");
                     return;
                 }
 
                 if (TextUtils.isEmpty(passwort) ) {
-                    mPassword.setError("Passwort fehlt");
+                    passwordLayout.setError("Passwort fehlt");
+                    //mPassword.setError("Passwort fehlt");
                     mPassword.setText("");
                     return;
                 }
 
                 if(passwort.length() < 6 ){
-                    mPassword.setError("Passwort muss mindestens 6 Zeichen lang sein");
+                    passwordLayout.setError("Passwort muss mindestens 6 Zeichen lang sein");
+                    //mPassword.setError("Passwort muss mindestens 6 Zeichen lang sein");
                     mPassword.setText("");
                     return;
                 }
@@ -128,11 +135,13 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         if (task.getResult().isEmpty()){
                                             // Wenn in der Datenbank die angebenene E-Mail nicht existiert
+                                            emailLayot.setError("E-Mail ist falsch / nicht registriert");
                                             Toast.makeText(LoginActivity.this, "E-Mail ist falsch / nicht registriert", Toast.LENGTH_SHORT).show();
                                             mEmail.setText("");
                                             Log.d(TAG, "E-Mail ist falsch / nicht registriert");
                                         }else {
                                             // Wenn die E-mail existiert muss das Passwort Falsch sein
+                                            passwordLayout.setError("Passwort ist falsch");
                                             Toast.makeText(LoginActivity.this, "Passwort ist falsch", Toast.LENGTH_SHORT).show();
                                             mPassword.setText("");
                                             Log.d(TAG, "Passwort ist falsch");

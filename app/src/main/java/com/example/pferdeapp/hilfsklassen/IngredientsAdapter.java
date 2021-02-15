@@ -1,11 +1,12 @@
 package com.example.pferdeapp.hilfsklassen;
-
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +15,15 @@ import com.example.pferdeapp.R;
 
 import java.util.ArrayList;
 
-public class IngredientsListAdapter extends ArrayAdapter<IngredientsListModel> {
+
+public class IngredientsAdapter extends ArrayAdapter<IngredientsListModel> {
 
     private static final String TAG = "IngredientsListAdapter";
 
     private Context mContext;
     int mRessource;
 
-    public IngredientsListAdapter(Context context, int resource, ArrayList<IngredientsListModel> objects) {
+    public IngredientsAdapter(Context context, int resource, ArrayList<IngredientsListModel> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mRessource =  resource;
@@ -35,6 +37,7 @@ public class IngredientsListAdapter extends ArrayAdapter<IngredientsListModel> {
         String name = getItem(position).getIngredientsName();
         String val = getItem(position).getValue();
         String range = getItem(position).getRange();
+        String color = getItem(position).getColor();
 
         // Kreiere ein IngredientsListModel Objekt mit diesen Informationen
         IngredientsListModel ingredients = new IngredientsListModel(name, val, range);
@@ -50,6 +53,24 @@ public class IngredientsListAdapter extends ArrayAdapter<IngredientsListModel> {
         tvValue.setText(val);
         tvRange.setText(range);
 
+        if(!(color ==null)){
+            if (color.equals("green")) {
+                convertView.setBackgroundColor(Color.GREEN);
+            }else if (color.equals("red")) {
+                convertView.setBackgroundColor(Color.RED);
+            }else if (color.equals("yellow")) {
+                convertView.setBackgroundColor(Color.YELLOW);
+            }else if (color.equals("black")) {
+                convertView.setBackgroundColor(Color.parseColor("#888888"));
+            }
+        }else{
+            convertView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+
+
         return convertView;
     }
 }
+
+

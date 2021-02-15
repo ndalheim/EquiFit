@@ -3,6 +3,7 @@ package com.example.pferdeapp.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -19,8 +20,13 @@ import android.widget.Toast;
 
 import com.example.pferdeapp.Activities.AddHorseActivity;
 import com.example.pferdeapp.Activities.ShowHorseInformationActivity;
+import com.example.pferdeapp.Database.Horse;
 import com.example.pferdeapp.R;
 
+import com.example.pferdeapp.hilfsklassen.DeleteDialog;
+import com.example.pferdeapp.hilfsklassen.IngredientsDialog;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -83,6 +89,16 @@ public class HorseFragment extends Fragment {
                 intent.putExtra("UserId", uid);
                 startActivity(intent);
 
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DeleteDialog deleteDialog = new DeleteDialog();
+                deleteDialog.setHorseName(horseList.get(i));
+                deleteDialog.show(getFragmentManager(), "test");
+                return false;
             }
         });
 

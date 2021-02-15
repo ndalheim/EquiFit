@@ -7,7 +7,7 @@ public class FeedCosts {
     private double price; //Preis
     private double amount; //Menge/Gewicht
 
-    public FeedCosts(String name, String brand, double price, double amount) {
+    public FeedCosts(String name, String brand, double amount, double price) {
         this.name = name;
         this.brand = brand;
         this.price = price;

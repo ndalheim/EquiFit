@@ -1,0 +1,40 @@
+{
+  "test_zink": {
+    "brand": "zink",
+    "name": "test",
+    "productDescription": "test",
+    "composition": "test",
+    "feedingRecommendation": "test",
+    "price": "15.99",
+    "amount": "20.0",
+    "ingredients": {
+        "Zink": {
+            "unit" : "mg/kg",
+            "quantity" : "26"
+        },
+        "Mangan": {
+             "unit" : "mg/kg",
+             "quantity" : "30"
+        }
+    }
+  },
+   "test_kupfer": {
+      "brand": "kupfer",
+      "name": "test",
+      "productDescription": "test",
+      "composition": "test",
+      "feedingRecommendation": "test",
+      "price": "15.99",
+      "amount": "20.0",
+      "ingredients": {
+          "Kupfer": {
+              "unit" : "mg/kg",
+              "quantity" : "4.6"
+          },
+          "Mangan": {
+               "unit" : "mg/kg",
+               "quantity" : "30"
+          }
+      }
+    }
+}

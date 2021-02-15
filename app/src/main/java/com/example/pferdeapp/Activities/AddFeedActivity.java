@@ -26,8 +26,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class AddFeedActivity extends AppCompatActivity {
@@ -40,9 +51,9 @@ public class AddFeedActivity extends AppCompatActivity {
      private String feedingRecommendationDescription; //Fütterungsempfehlung
      private Map<String,Double> ingredients; //Inhaltsstoffe*/
 
-    EditText mFeedName, mfeedBrand, mProductDescription, mComposition, mFeedingRecommendationDescription, mIngredientsValue, mAmount, mCosts;
+    EditText mFeedName, mfeedBrand, mProductDescription, mComposition, mFeedingRecommendationDescription, mIngredientsValue, mAmount, mCosts, mJSONPath;
     Spinner mIngredients, mUnit;
-    Button mAddIngredientsBtn, mSaveFeedBtn, mBackToMainBtn;
+    Button mAddIngredientsBtn, mSaveFeedBtn, mBackToMainBtn, mLoadJSONBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     //Map<String, Map<Double, String>> ingredients = new HashMap<String, Map<Double, String>>();
     Map<String, Object> ingredients = new HashMap<>();
@@ -90,6 +101,9 @@ public class AddFeedActivity extends AppCompatActivity {
         mSaveFeedBtn = findViewById(R.id.save_feed_information_button);
         mBackToMainBtn = findViewById(R.id.back_to_CalendarFragment_button);
 
+        //EditText und Button um JSON Datei in der Datenbank hochzuladen
+        mLoadJSONBtn = findViewById(R.id.save_json_button);
+        //mJSONPath = findViewById(R.id.json_path);
 
         //Inhaltstoffe-Hinzufügen-Button
         mAddIngredientsBtn.setOnClickListener(new View.OnClickListener() {
@@ -125,12 +139,106 @@ public class AddFeedActivity extends AppCompatActivity {
         mSaveFeedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFeedToFirestore();
+
+                //Nutzereingaben speichern
+                String feedName = mFeedName.getText().toString().trim();
+                String feedBrand = mfeedBrand.getText().toString().trim();
+                String productDescription = mProductDescription.getText().toString().trim();
+                String composition = mComposition.getText().toString().trim();
+                String feedingRecommendationDescription = mFeedingRecommendationDescription.getText().toString().trim();
+                Double feedAmout = Double.parseDouble(mAmount.getText().toString().trim());
+                Double feedPrice = Double.parseDouble(mCosts.getText().toString().trim());
+
+                //Futterdaten der Futterdatenbank hinzufügen
+                addFeedToFirestore(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, feedAmout, feedPrice);
+            }
+        });
+
+        mLoadJSONBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String jsonPath = mJSONPath.getText().toString().trim();
+                readJSON();
             }
         });
 
 
     }
+
+    private void readJSON() {
+        
+        InputStream is = getResources().openRawResource(R.raw.feed_database);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String json = "";
+
+        try {
+            while ((json = reader.readLine()) != null){
+                stringBuilder.append(json);
+            }
+            reader.close();
+            createJSONObject(stringBuilder.toString());
+        }catch (IOException | JSONException e) {
+            Toast.makeText(getApplicationContext(),"ERROR", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
+    }
+
+    private void createJSONObject(String jsonString) throws JSONException {
+
+        JSONObject obj = new JSONObject(jsonString);
+        //String pageName = obj.getJSONObject("address").getString("city");
+
+        String feedID;
+        String feedName;
+        String feedBrand;
+        String productDescription;
+        String composition;
+        String feedingRecommendationDescription;
+        Map<String, String> ingredient = null;
+        String unit;
+        String value;
+        String ingredientsName;
+        Double feedAmout;
+        Double feedPrice;
+
+        ingredients.clear();
+
+        Iterator<String> keys = obj.keys();
+        JSONArray keys2 = obj.names();
+        //Läuft über die namen der Futter
+        for (int i = 0; i < keys2.length(); i++) {
+            feedID = keys2.getString(i);
+            feedName = obj.getJSONObject(feedID).getString("name");
+            feedBrand = obj.getJSONObject(feedID).getString("brand");
+            productDescription = obj.getJSONObject(feedID).getString("productDescription");
+            composition = obj.getJSONObject(feedID).getString("composition");
+            feedingRecommendationDescription = obj.getJSONObject(feedID).getString("feedingRecommendation");
+            feedAmout = Double.valueOf(obj.getJSONObject(feedID).getString("amount"));
+            feedPrice = Double.valueOf(obj.getJSONObject(feedID).getString("price"));
+
+
+            JSONObject ingredientsObject  = obj.getJSONObject(feedID).getJSONObject("ingredients");
+            Iterator<String> ingredientsKeys = ingredientsObject.keys();
+            JSONArray ingredientsArray = ingredientsObject.names();
+
+            for (int j = 0; j < ingredientsArray.length(); j++) {
+                Map<String, String> ingredientsUnit = new HashMap<>();
+                ingredientsName = ingredientsArray.getString(i);
+
+                unit = ingredientsObject.getJSONObject(ingredientsName).getString("unit");
+                value = ingredientsObject.getJSONObject(ingredientsName).getString("quantity");
+
+                ingredientsUnit.put(unit, value);
+
+                ingredients.put(ingredientsName, ingredientsUnit);
+            }
+            addFeedToFirestore(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, feedAmout, feedPrice);
+        }
+    }
+
 
     private void addIngredientItem(View view) {
         String ingredients = mIngredients.getSelectedItem().toString();
@@ -166,14 +274,7 @@ public class AddFeedActivity extends AppCompatActivity {
         });
     }
 
-    private void addFeedToFirestore() {
-        String feedName = mFeedName.getText().toString().trim();
-        String feedBrand = mfeedBrand.getText().toString().trim();
-        String productDescription = mProductDescription.getText().toString().trim();
-        String composition = mComposition.getText().toString().trim();
-        String feedingRecommendationDescription = mFeedingRecommendationDescription.getText().toString().trim();
-        Double feedAmout = Double.parseDouble(mAmount.getText().toString().trim());
-        Double feedPrice = Double.parseDouble(mCosts.getText().toString().trim());
+    private void addFeedToFirestore(String feedName, String feedBrand,String productDescription,String composition,String feedingRecommendationDescription,Double feedAmout, Double feedPrice) {
 
         if(!(feedName.equals("")||feedBrand.equals("")||productDescription.equals("") ||composition.equals("")
                 ||feedingRecommendationDescription.equals("") ||ingredients.isEmpty()||ingredients.containsKey("Unit")

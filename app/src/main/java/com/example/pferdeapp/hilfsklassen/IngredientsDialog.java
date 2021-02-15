@@ -1,8 +1,8 @@
 package com.example.pferdeapp.hilfsklassen;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class IngredientsDialog extends AppCompatDialogFragment {
 
+    String titel = "";
     String message = "";
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
 
     public String getMessage() {
         return message;
@@ -24,15 +29,15 @@ public class IngredientsDialog extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Information")
+        AlertDialog builder = new AlertDialog.Builder(getActivity())
+                .setTitle(titel)
                 .setMessage(message)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                .setPositiveButton("OK", null)
+                .show();
 
-                    }
-                });
-        return builder.create();
+        TextView textView = (TextView) builder.findViewById(android.R.id.message);
+        textView.setTextSize(14);
+
+        return builder;
     }
 }
