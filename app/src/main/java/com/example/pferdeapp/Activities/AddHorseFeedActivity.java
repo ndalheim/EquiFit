@@ -88,7 +88,6 @@ public class AddHorseFeedActivity extends AppCompatActivity {
 
         // Speichern und zurück Button
         mSaveHorseFeedBtn = findViewById(R.id.save_feed_plan_button);
-        mBackToMainBtn = findViewById(R.id.back_to_horse_information_button);
 
 
         db.collection("Feed").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -132,15 +131,6 @@ public class AddHorseFeedActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //Zurück-Button zur Main Activity
-        mBackToMainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
-
 
         //Futter-Speichern-Button. Speichert Futter in der Datenbank
         mSaveHorseFeedBtn.setOnClickListener(new View.OnClickListener() {

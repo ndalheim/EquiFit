@@ -61,7 +61,6 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
 
 
         goToAddFeedBtn = findViewById(R.id.add_horse_feed_button);
-        goBackToHorseFragmentBtn = findViewById(R.id.back_to_horse_fragment_button);
         mfeedListView = findViewById(R.id.horse_feed_plan);
         mCalculateIngrementsBtn = findViewById(R.id.calculate_ingredients_button);
 
@@ -75,14 +74,6 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
-            }
-        });
-
-        //Geh zur AddHorseFeedActivity
-        goBackToHorseFragmentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 

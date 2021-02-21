@@ -240,8 +240,6 @@ public class FeedFragment extends Fragment {
 
                 tvSortedFeed.setText(sortedFeedId);
                 tvSortedFeedValue.setText(sortedFeedValue);
-                Log.d(TAG, "onEvent: +++++++++++++++++"+ sortedFeedId);
-                Log.d(TAG, "onEvent: +++++++++++++++++"+ ingredienTest);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_selectable_list_item, feedList);
                 adapter.notifyDataSetChanged();
                 feedListView.setAdapter(adapter);

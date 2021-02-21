@@ -112,6 +112,9 @@
         <action
             android:id="@+id/action_showHorseActivity_to_addHorseFeedActivity"
             app:destination="@id/addHorseFeedActivity" />
+        <action
+            android:id="@+id/action_showHorseActivity_to_feedInformationActivity"
+            app:destination="@id/feedInformationActivity" />
     </activity>
     <activity
         android:id="@+id/addHorseFeedActivity"

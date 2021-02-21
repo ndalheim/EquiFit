@@ -88,7 +88,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             intolerance[0] = document.getString("intolerance");
-                            Log.d(TAG, "No such documentxxxxxxxxxxxxxxxxxxxxxxxxxx" + intolerance[0]);
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -389,10 +388,11 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Jod":
-                    info = "";
+                    info = "Es sind keine Informationen zu diesem Inhaltsstoff Verfügbar";
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 default:
+                    info = "Es sind keine Informationen zu diesem Inhaltsstoff Verfügbar";
                     roundOff = Math.round(valueAsDouble * 100.0) / 100.0;
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
@@ -405,9 +405,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     private void checkIntolerance(String key, Double value, String intolerance, String mInfo, Double min, Double max) {
         IngredientsListModel ingredients;
         double roundOff = Math.round(value * 100.0) / 100.0;
+
         // Testen auf Intoleranzen, falls ja wird das Feld schwarz markiert
         if (intolerance.equals(key)){
-            Log.d(TAG, "checkIngredientsValue: -------------------------------" + intolerance + key);
             roundOff = Math.round(value * 100.0) / 100.0;
             // Falls der Inhalsstoff keine Range hat
             if(min==null  || max==null || value==null){
@@ -433,7 +433,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
         double roundOff = Math.round(value * 100.0) / 100.0;
         IngredientsListModel ingredients;
-        String info = "Es sind derzeit keine Informationen zu diesem Inhaltsstoff verfügbar";
 
 
         //testen ob der Inhaltsstoff eine Range hat
@@ -445,40 +444,22 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         }else{
             // Wert Perfekt
             if ((value >= x) && (value <= y)){
-                // Wenn eine Info vorhanden ist
-                if(!mInfo.isEmpty()){
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "green");
-                    openDialog();
-                }else{
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info, "green");
-                }
-
+                ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "green");
+                openDialog();
                 ingredientsList.add(ingredients);
                 ingredientsAdapter.notifyDataSetChanged();
 
                 // Wert zu niedrig
             }else if((value < x)){
-                // Wenn eine Info vorhanden ist
-                if(!mInfo.isEmpty()){
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "red");
-                    openDialog();
-                }else{
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info,  "red");
-                }
-
+                ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "red");
+                openDialog();
                 ingredientsList.add(ingredients);
                 ingredientsAdapter.notifyDataSetChanged();
 
                 // Wert zu hoch
             }else if((value > x)){
-                // Wenn eine Info vorhanden ist
-                if(!mInfo.isEmpty()){
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "yellow");
-                    openDialog();
-                }else{
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info,  "yellow");
-                }
-
+                ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo,  "yellow");
+                openDialog();
                 ingredientsList.add(ingredients);
                 ingredientsAdapter.notifyDataSetChanged();
             }
@@ -495,14 +476,9 @@ public class ShowIngredientsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 IngredientsDialog informationDialog = new IngredientsDialog();
-                Log.d(TAG, "onItemClick: ______________" + ingredientsList.get(position).getInfo());
                 informationDialog.setTitel(ingredientsList.get(position).getIngredientsName());
-                //testet ob der Inhaltsstoff eine Information besitzt
-                if(ingredientsList.get(position).getInfo() == null){
-                    informationDialog.setMessage("Es sind keine Informationen zu diesem Inhaltsstoff Verfügbar");
-                }else{
-                    informationDialog.setMessage(ingredientsList.get(position).getInfo());
-                }
+
+                informationDialog.setMessage(ingredientsList.get(position).getInfo());
 
                 informationDialog.show(getSupportFragmentManager(), "Bispiel Dialog");
 

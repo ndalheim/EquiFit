@@ -44,7 +44,7 @@
     <string name="add_horse_feed_to_feedplan">Füge das tägliche Futter deines Pferdes dem Futterplan hinzu</string>
     <string name="choose_feed">Wähle ein Futter aus:</string>
     <string name="calculateIngredients">Futterplan Überprüfen</string>
-    <string name="your_ingredients">Folgende Inhaltstoffe bekommt sein Pferd pro Tag:</string>
+    <string name="your_ingredients">Folgende Inhaltstoffe bekommt dein Pferd pro Tag:</string>
     <string name="add_json">JSON</string>
     <string name="find">suchen</string>
     <string name="filtern">filtern</string>

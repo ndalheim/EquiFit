@@ -47,14 +47,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/back_to_horse_fragment_button"
+        android:id="@+id/add_horse_feed_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
         android:layout_marginBottom="48dp"
         android:background="@drawable/my_button"
-        android:text="@string/back"
+        android:text="@string/add_feed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/save_horse_information_button"
         app:layout_constraintHorizontal_bias="0.398"
@@ -63,27 +63,15 @@
         app:layout_constraintVertical_bias="0.197" />
 
     <Button
-    android:id="@+id/add_horse_feed_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="48dp"
-    android:background="@drawable/my_button"
-    android:text="@string/add_feed"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/back_to_horse_fragment_button" />
-
-    <Button
         android:id="@+id/calculate_ingredients_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/my_button"
         android:text="@string/calculateIngredients"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
-        app:layout_constraintStart_toEndOf="@+id/back_to_horse_fragment_button" />
+        app:layout_constraintStart_toEndOf="@+id/add_horse_feed_button" />
 
 
     <LinearLayout

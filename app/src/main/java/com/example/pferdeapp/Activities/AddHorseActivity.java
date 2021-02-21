@@ -72,7 +72,6 @@ public class AddHorseActivity extends AppCompatActivity{
         mhorseIntolerance.setAdapter(intoleranceAdapter);
 
         mSaveHorseBtn = findViewById(R.id.save_horse_information_button);
-        mBackBtn = findViewById(R.id.back_to_FeedFragment_button);
 
         //Falls die View von edit horse aufgerufen wurde, werden die Informationen von dem Pferd in der Ansicht gesetzt
         if(getIntent().hasExtra("HorseName") == true) {
@@ -95,18 +94,6 @@ public class AddHorseActivity extends AppCompatActivity{
             mhorseIntolerance.setSelection(intoleranceAdapter.getPosition(horseIntolerance));
 
         }
-
-
-
-
-
-        // Weiterleitung zur Main Activity
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
 
 
         mSaveHorseBtn.setOnClickListener(new View.OnClickListener() {

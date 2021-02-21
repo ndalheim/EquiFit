@@ -102,8 +102,7 @@ public class AddFeedActivity extends AppCompatActivity {
         mAddIngredientsBtn = findViewById(R.id.add_ingredients_button);
 
         // Speichern und zurück Button
-        mSaveFeedBtn = findViewById(R.id.save_feed_information_button);
-        mBackToMainBtn = findViewById(R.id.back_to_CalendarFragment_button);
+        //mSaveFeedBtn = findViewById(R.id.save_feed_information_button);
 
         //EditText und Button um JSON Datei in der Datenbank hochzuladen
         mLoadJSONBtn = findViewById(R.id.save_json_button);
@@ -130,16 +129,7 @@ public class AddFeedActivity extends AppCompatActivity {
 
         deleteIngredientsItems();
 
-
-        //Zurück-Button zur Main Activity
-        mBackToMainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
-
-
+        /**
         //Futter-Speichern-Button. Speichert Futter in der Datenbank
         mSaveFeedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +147,7 @@ public class AddFeedActivity extends AppCompatActivity {
                 //Futterdaten der Futterdatenbank hinzufügen
                 addFeedToFirestore(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, feedAmout, feedPrice);
             }
-        });
+        });*/
 
         mLoadJSONBtn.setOnClickListener(new View.OnClickListener() {
             @Override
