@@ -62,7 +62,7 @@ public class DeleteDialog extends DialogFragment {
         AlertDialog builder = new AlertDialog.Builder(getActivity())
                 .setTitle("Aus der Datenbank löschen")
                 .setMessage("Möchtest du " + horseName + feedName +  " wirklich löschen?")
-                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -107,7 +107,7 @@ public class DeleteDialog extends DialogFragment {
 
                     }
                 })
-                .setNegativeButton("Nein",
+                .setNegativeButton("Abbrechen",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.dismiss();

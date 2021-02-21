@@ -45,6 +45,11 @@ public class HorseFragment extends Fragment {
     private Button mAddHorseBtn;
     ListView listView;
     private List<String> horseList = new ArrayList<>();
+    private List<String> horseWeight = new ArrayList<>();
+    private List<String> horseHigh = new ArrayList<>();
+    private List<String> horseCondition = new ArrayList<>();
+    private List<String> horseDefect = new ArrayList<>();
+    private List<String> horseIntolerance = new ArrayList<>();
     FirebaseUser user;
     String uid, horseNameAndUid;
 
@@ -86,6 +91,14 @@ public class HorseFragment extends Fragment {
                 // Übergibt der nächsten Activity Informationen
                 intent.putExtra("HorseId", horseNameAndUid);
                 intent.putExtra("HorseName", horseList.get(position));
+                intent.putExtra("HorseWeight", horseWeight.get(position));
+                Log.d(TAG, "onItemClick: ++++++++++" + horseWeight.get(position));
+                intent.putExtra("HorseHigh", horseHigh.get(position));
+                Log.d(TAG, "onItemClick: ++++++++++" + horseHigh.get(position));
+                intent.putExtra("HorseCondition", horseCondition.get(position));
+                intent.putExtra("HorseDefect", horseDefect.get(position));
+                intent.putExtra("HorseIntolerance", horseIntolerance.get(position));
+
                 intent.putExtra("UserId", uid);
                 startActivity(intent);
 
@@ -115,6 +128,18 @@ public class HorseFragment extends Fragment {
                         for (DocumentSnapshot snapshot : documentSnapshot){
                             if(uID.equals(snapshot.getString("uid"))){
                                 horseList.add(snapshot.getString("horseName"));
+
+                                Double weight = snapshot.getDouble("horseWeight");
+                                int intWeight = weight.intValue();
+                                horseWeight.add(String.valueOf(intWeight));
+
+                                Double high = snapshot.getDouble("horseWeight");
+                                int intHigh = weight.intValue();
+                                horseHigh.add(String.valueOf(intHigh));
+
+                                horseCondition.add(snapshot.getString("horseCondition"));
+                                horseDefect.add(snapshot.getString("defect"));
+                                horseIntolerance.add(snapshot.getString("intolerance"));
                             }
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity()

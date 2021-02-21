@@ -13,7 +13,7 @@
     <string name="logout">Ausloggen</string>
     <string name="horseName">PferdeName</string>
     <string name="horseHeight">Stockmaß (in cm)</string>
-    <string name="HorseWeight">Gewicht (in kg)</string>
+    <string name="HorseWeight">Gewicht bzw. Soll-Gewicht (in kg)</string>
     <string name="horseCondidion">Trainingszustand</string>
     <string name="HorseDefect">Mangel</string>
     <string name="horseIntolerance">Intoleranz</string>
@@ -45,22 +45,72 @@
     <string name="choose_feed">Wähle ein Futter aus:</string>
     <string name="calculateIngredients">Futterplan Überprüfen</string>
     <string name="your_ingredients">Folgende Inhaltstoffe bekommt sein Pferd pro Tag:</string>
-    <string name="add_json">Füge JSON der Datenbank hinzu</string>
+    <string name="add_json">JSON</string>
+    <string name="find">suchen</string>
+    <string name="filtern">filtern</string>
+    <string name="sortieren">sortieren</string>
+    <string name="sort_feed">Sortiere Futter nach einem Inhaltsstoff:</string>
+    <string name="feedplan">Futterplan:</string>
+    <string name="ration">Ration</string>
+    <string name="ingredientsName">Inhaltsstoff:</string>
+    <string name="value">Menge:</string>
+    <string name="unit">Einheit:</string>
 
     <string-array name="defects_array">
         <item>keine</item>
+        <item>Rohprotein </item>
+        <item>praec. verd. Rohprotein</item>
+        <item>Rohöle und - fette</item>
+        <item>Rohfaser</item>
+        <item>Rohasche</item>
+        <item>Calcium</item>
+        <item>Phosphor</item>
+        <item>Magnesium</item>
+        <item>Chlorid</item>
+        <item>Natrium</item>
+        <item>Kalium</item>
+        <item>Schwefel</item>
+        <item>Lysin</item>
+        <item>Methionin</item>
+        <item>Cystin</item>
+        <item>Threonin</item>
         <item>Zink</item>
-        <item>Eisen</item>
-        <item>Selen</item>
         <item>Mangan</item>
         <item>Kupfer</item>
+        <item>Selen</item>
+        <item>Selen organisch</item>
+        <item>Eisen</item>
         <item>Jod</item>
+        <item>Cobalt</item>
+        <item>Vitamin E</item>
+        <item>Vitamin A</item>
+        <item>Vitamin D3</item>
+        <item>Vitamin B1</item>
+        <item>Vitamin B2</item>
+        <item>Vitamin B6</item>
+        <item>Vitamin B12</item>
+        <item>ß-Carotin</item>
+        <item>Stärke</item>
+        <item>Fruktan</item>
+        <item>Stärke</item>
+        <item>Zucker</item>
+        <item>Stärke und Zucker</item>
+        <item>Cholinchlorid</item>
+        <item>Nicotinsäure</item>
+        <item>Folsäure</item>
+        <item>Pantothensäure</item>
+        <item>Biotin</item>
     </string-array>
 
     <string-array name="condidion_array">
         <item>gut</item>
         <item>übergewichtig</item>
         <item>untergewichtig</item>
+    </string-array>
+
+    <string-array name="search_array">
+        <item>aufsteigend</item>
+        <item>absteigend</item>
     </string-array>
 
     <string-array name="ingrements_array">

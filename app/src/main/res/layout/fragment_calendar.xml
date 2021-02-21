@@ -18,22 +18,31 @@
         app:layout_constraintVertical_bias="0.28" />
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="110dp"
+        android:layout_width="354dp"
+        android:layout_height="111dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="429dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="0.098">
 
         <TextView
-            android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Durchschnittliche Futterausgaben im Monat: " />
 
         <TextView
             android:id="@+id/pricePerMonthTextView"
-            android:layout_width="match_parent"
+            android:textColor="@color/colorDarkGreen"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" €" />
     </LinearLayout>
 
 

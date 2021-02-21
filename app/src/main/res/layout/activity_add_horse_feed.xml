@@ -32,11 +32,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="417dp"
-        android:layout_height="633dp"
+        android:layout_width="380dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="-3dp">
+        app:layout_constraintBottom_toTopOf="@+id/add_feed_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView5"
@@ -53,12 +55,12 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutAddHorseFeed3"
-            android:layout_width="390dp"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="82dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -76,11 +78,11 @@
 
             <Spinner
                 android:id="@+id/numberOfMealsSpinner"
-                android:layout_width="87dp"
+                android:layout_width="85dp"
                 android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="131dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -96,6 +98,8 @@
                     android:text="@string/portion" />
             </LinearLayout>
 
+
+
             <EditText
                 android:id="@+id/feedInGrammValue"
                 android:layout_width="76dp"
@@ -109,12 +113,6 @@
                 android:maxLength="7"
                 android:singleLine="true" />
 
-            <!-- <Button
-            android:id="@+id/addFeedWithGrammButton"
-            android:layout_width="44dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_button"
-            android:text="@string/add" /> -->
 
 
         </LinearLayout>

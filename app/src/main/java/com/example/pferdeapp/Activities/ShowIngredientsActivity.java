@@ -124,7 +124,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                         feedInGramMap.put(feedId, gramsPerDay);
 
                         // Methode für weitere Berechnungen aufrufen
-                        ingredients(feedId, userId, horseNameString, gramsPerDay, db, horseWeight, intolerance);
+                        calculateIngredientsPerDay(feedId, userId, horseNameString, gramsPerDay, db, horseWeight, intolerance);
                    }
 
                 }
@@ -136,7 +136,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     }
 
     //Rechnet alle Inhaltsstoffe von dem Futterplan von einem Pferd zusammen (Angaben in g pro Tag) und schreibt es in einer Map in die Datenbank zu dem Pferd
-    private void ingredients(final String feedId, final String userId, final String horseName, final Double gramsPerDay, FirebaseFirestore db, final String horseWeight, final String[] intolerance ) {
+    private void calculateIngredientsPerDay(final String feedId, final String userId, final String horseName, final Double gramsPerDay, FirebaseFirestore db, final String horseWeight, final String[] intolerance ) {
 
         // Ruft Collection Feed auf
         db.collection("Feed").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -210,7 +210,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                                             Double horseWeight = document.getDouble("horseWeight");
 
                                              // Ruft Methode auf die die Menge der Inhaltsstoffe
-                                            showHorseIngredients(mcalculatedIngredients, horseWeight, intolerance);
+                                            setIngredientsInformations(mcalculatedIngredients, horseWeight, intolerance);
                                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                         } else {
                                             Toast.makeText(ShowIngredientsActivity.this, "Dokument existiert nicht", Toast.LENGTH_SHORT).show();
@@ -239,7 +239,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     //TODO: Map aus der Datenbank auslesen
     // Methode überprüft ob Inhaltsstoffe im Rahmen liegen (Falls ein Rahmen gegeben ist)
-    private void showHorseIngredients(Map<String, Double> calculatetIngredients, Double horseWeight, final String[] intolerance) {
+    private void setIngredientsInformations(Map<String, Double> calculatetIngredients, Double horseWeight, final String[] intolerance) {
 
         ingredientsList.clear();
         String info = "";
@@ -278,17 +278,16 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             ingredientsAdapter.notifyDataSetChanged();
 
                         }else{
-                            checkIngredientsValue(key, caPROp, min, max, info, intolerance);
+                            checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                         }
                     }
-                    checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
+
 
                     break;
                 case "Zink":
                     min = 70 * horseWeight / 100;
                     max = 90 * horseWeight / 100;
                     info = "";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Kupfer":
@@ -308,7 +307,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             "- Gelenkchips\n" +
                             "- Wundheilungsstörungen\n\n" +
                             "Das Schwierigkeit bei der Behebung von Kupfermangel ist, dass Kupfer die Verstoffwechslung von Zink hemmen kann. Dies wiederum kann zu Zinkmangel führen, was unbedingt zu vermeiden ist.";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Natrium":
@@ -324,14 +322,12 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             "- einhergehend mit Flüssigkeitsverlust ist die Haut rissig und das Fell wird stumpfer\n" +
                             "- Das vermehrte Händelecken kann ein Zeichen für Salz-, respektive Natriummangel sein, muß aber nicht\n\n" +
                             "Zu niedrige Natriumwerte beim Pferd deuten auf Erkrankungen der Leber, Nieren oder des Herzens hin (Achtung andere Blutbildparameter beachten). Auch könnten zu niedrige Werte ein Hinweis auf eine Schilddrüsenunterfunktion beim Pferd sein." ;
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Chlorid":
                     min = 8 * horseWeight / 100;
                     max = 22.5 * horseWeight / 100;
                     info = "";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Selen":
@@ -345,14 +341,12 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             "- Zellschäden\n" +
                             "- Schlechtes Immunsystem\n\n" +
                             "Eindeutig feststellen läßt sich Selenmangel anhand eines Blutbildes, das der Tierarzt ins Labor schickt.";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Carnitin":
                     min = 3.0;
                     max = 10.0;
                     info = "";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
 
@@ -368,7 +362,6 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             "- Lahmheiten oder Muskelverspannungen (Vor allem der Muskelstoffwechsel verbraucht viel Mangan, bei einem Mangel laufen die Pferde steif und \"klemmig\")\n"+
                             "- Gelenkerkrankungen\n\n "+
                             "Den meisten Pferdehaltern ist Mangan für seine entscheidende Rolle in der Knorpelbildung bekannt. Das Spurenelement steuert die Funktion des Enzyms „Glycosyltransferase“, das vor allem für die körpereigene Bildung von Chondroitinsulfat benötigt wird. Chondroitin zählt zu den Glycosaminglykanen und  ist u.a. für die Bildung eines elastischen Knorpels und stabilen Bindegewebes mit verantwortlich. Durch die bedarfsgerechte Manganversorgung des Pferdes wird die Knorpelbildung und -regeneration aufrechterhalten. Deswegen sollte bei Jungpferden oder bei Pferden mit Gelenkproblemen auf eine ausreichende Manganzufuhr geachtet werden";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;case "Phosphor":
                     info = "Calcium sollte im Verhältnis zu Phosphor zwischen 1,5-2:1 (jedoch nicht unter 1:1 und über 3:1 liegen)";
@@ -381,8 +374,10 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             ingredientsList.add(ingredients);
                             ingredientsAdapter.notifyDataSetChanged();
                         }
+                    }else{
+                        checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     }
-                    checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
+
                     break;
                 case "Eisen":
                     info = "Folgende Anzeichen deuten auf einen Eisenmangel hin:\n" +
@@ -391,24 +386,14 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                             "Appetitlosigkeit und Gewichtsabnahme (Untergewicht)\n" +
                             "Fellprobleme\n" +
                             "Immunprobleme, Anfälligkeit";
-                    checkIngredientsValue(key, valueAsDouble, min, max, info, intolerance);
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 case "Jod":
                     info = "";
-                    if(intolerance[0].equals("keine")){
-                        roundOff = Math.round(valueAsDouble * 100.0) / 100.0;
-                        ingredients = new IngredientsListModel(key, Double.toString(roundOff));
-                        ingredientsList.add(ingredients);
-                        ingredientsAdapter.notifyDataSetChanged();
-                    }
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
                 default:
                     roundOff = Math.round(valueAsDouble * 100.0) / 100.0;
-                    ingredients = new IngredientsListModel(key, Double.toString(roundOff));
-                    ingredientsList.add(ingredients);
-                    ingredientsAdapter.notifyDataSetChanged();
                     checkIntolerance(key, valueAsDouble, intolerance[0], info, min, max);
                     break;
             }
@@ -417,35 +402,34 @@ public class ShowIngredientsActivity extends AppCompatActivity {
 
     }
 
-    private void checkIntolerance(String key, Double value, String intolerance, String mInfo, Double x, Double y) {
+    private void checkIntolerance(String key, Double value, String intolerance, String mInfo, Double min, Double max) {
         IngredientsListModel ingredients;
         double roundOff = Math.round(value * 100.0) / 100.0;
         // Testen auf Intoleranzen, falls ja wird das Feld schwarz markiert
         if (intolerance.equals(key)){
             Log.d(TAG, "checkIngredientsValue: -------------------------------" + intolerance + key);
             roundOff = Math.round(value * 100.0) / 100.0;
-
             // Falls der Inhalsstoff keine Range hat
-            if(x==null  || y==null || value==null){
+            if(min==null  || max==null || value==null){
                 ingredients = new IngredientsListModel(key, Double.toString(roundOff), "", mInfo, "black");
-                clickable();
+                openDialog();
                 ingredientsList.add(ingredients);
                 ingredientsAdapter.notifyDataSetChanged();
             }else{
-                ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "black");
-                clickable();
-
-                ingredients = new IngredientsListModel(key, Double.toString(roundOff));
+                ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", min + " - " + max, mInfo, "black");
+                openDialog();
                 ingredientsList.add(ingredients);
                 ingredientsAdapter.notifyDataSetChanged();
             }
 
+        }else{
+            checkIngredientsInRange(key, value, min, max, mInfo);
         }
 
     }
 
     // Methode zeigt die Menge der einzelnen Inhalstoffe pro tag in einer Liste an mit eventuelller Fehlermeldung
-    private void checkIngredientsValue(String key, Double value,  Double x, Double y, String mInfo, final String[] intolerance) {
+    private void checkIngredientsInRange(String key, Double value,  Double x, Double y, String mInfo) {
 
         double roundOff = Math.round(value * 100.0) / 100.0;
         IngredientsListModel ingredients;
@@ -455,7 +439,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
         //testen ob der Inhaltsstoff eine Range hat
         if(x==null  || y==null || value==null){
             ingredients = new IngredientsListModel(key, Double.toString(roundOff), "", mInfo);
-            clickable();
+            openDialog();
             ingredientsList.add(ingredients);
             ingredientsAdapter.notifyDataSetChanged();
         }else{
@@ -464,7 +448,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 // Wenn eine Info vorhanden ist
                 if(!mInfo.isEmpty()){
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "green");
-                    clickable();
+                    openDialog();
                 }else{
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info, "green");
                 }
@@ -477,7 +461,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 // Wenn eine Info vorhanden ist
                 if(!mInfo.isEmpty()){
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "red");
-                    clickable();
+                    openDialog();
                 }else{
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info,  "red");
                 }
@@ -490,7 +474,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                 // Wenn eine Info vorhanden ist
                 if(!mInfo.isEmpty()){
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, mInfo, "yellow");
-                    clickable();
+                    openDialog();
                 }else{
                     ingredients = new IngredientsListModel(key, Double.toString(roundOff) + "g", x + " - " + y, info,  "yellow");
                 }
@@ -504,7 +488,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
     }
 
     // Methode macht Listeneinträge clickable, falls sie eine Info besitzen
-    private void clickable() {
+    private void openDialog() {
 
         mIngredientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -520,7 +504,7 @@ public class ShowIngredientsActivity extends AppCompatActivity {
                     informationDialog.setMessage(ingredientsList.get(position).getInfo());
                 }
 
-                informationDialog.show(getSupportFragmentManager(), "#################beispiel Dialog");
+                informationDialog.show(getSupportFragmentManager(), "Bispiel Dialog");
 
             }
         });

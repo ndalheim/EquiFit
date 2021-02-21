@@ -1,5 +1,6 @@
 package com.example.pferdeapp.Database;
 
+import java.util.List;
 import java.util.Map;
 
 public class Feed {
@@ -10,6 +11,9 @@ public class Feed {
     private String composition; //Zusammensetzung
     private String feedingRecommendationDescription; //Fütterungsempfehlung
     private Map<String, Object> ingredients; //Inhaltsstoffe
+
+    private List<String> ingredientsList;
+    private Map<String, String> ingredientValues;
     //private Map<String,Object> feedingRecommendation; //Fütterungsempfehlung als Faktor
 
     public Feed() {
@@ -22,6 +26,43 @@ public class Feed {
         this.composition = composition;
         this.feedingRecommendationDescription = feedingRecommendationDescription;
         this.ingredients = ingredients;
+    }
+
+    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String, Object> ingredients, List<String> ingredientsList) {
+        this.name = name;
+        this.brand = brand;
+        this.productDescription = productDescription;
+        this.composition = composition;
+        this.feedingRecommendationDescription = feedingRecommendationDescription;
+        this.ingredients = ingredients;
+        this.ingredientsList = ingredientsList;
+    }
+
+    public Feed(String name, String brand, String productDescription, String composition, String feedingRecommendationDescription, Map<String, Object> ingredients, List<String> ingredientsList, Map<String, String> ingredientValues) {
+        this.name = name;
+        this.brand = brand;
+        this.productDescription = productDescription;
+        this.composition = composition;
+        this.feedingRecommendationDescription = feedingRecommendationDescription;
+        this.ingredients = ingredients;
+        this.ingredientsList = ingredientsList;
+        this.ingredientValues = ingredientValues;
+    }
+
+    public Map<String, String> getIngredientValues() {
+        return ingredientValues;
+    }
+
+    public void setIngredientValues(Map<String, String> ingredientValues) {
+        this.ingredientValues = ingredientValues;
+    }
+
+    public List<String> getIngredientsList() {
+        return ingredientsList;
+    }
+
+    public void setIngredientsList(List<String> ingredientsList) {
+        this.ingredientsList = ingredientsList;
     }
 
     public String getName() {

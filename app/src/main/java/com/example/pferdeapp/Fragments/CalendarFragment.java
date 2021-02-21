@@ -1,5 +1,6 @@
 package com.example.pferdeapp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,14 +68,12 @@ public class CalendarFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         tvPricePerMonth = (TextView) rootView.findViewById(R.id.pricePerMonthTextView);
-        tvPricePerMonth.setTextColor(Color.GREEN);
         calculateExpenditure();
 
 
@@ -106,7 +105,6 @@ public class CalendarFragment extends Fragment {
                                 final Double numberOfMeals = snapshot2.getDouble("numberOfMeals");
                                 final String feedId = snapshot2.getString("feedId");
                                 final Double gramPerDay = feedInGram* numberOfMeals;
-                                Log.d(TAG, "----------------------------Gram per day: " + gramPerDay);
 
                                 // Sucht die preise von den verfütterten Futtern
                                 db.collection("FeedCosts").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -116,15 +114,11 @@ public class CalendarFragment extends Fragment {
                                         // Durchsucht die Futter-Datenbank nach dem Futter aus dem Futterplan
                                         for (DocumentSnapshot snapshot3 : value3) {
                                             if(feedId.equals(snapshot3.getId().toString())){
-
-                                                Log.d(TAG, "----------------------------: futter " + snapshot3.getString("name"));
                                                 Double amount = snapshot3.getDouble("amount");
                                                 Double price = snapshot3.getDouble("price");
 
-                                                Log.d(TAG, "###################### Menge:" + amount +" Preis:" + price + " Gramm pro Tag " + gramPerDay);
                                                 Double test = 30 * price / (amount/(gramPerDay/1000));
                                                 kosten.add(test);
-                                                Log.d(TAG, "----------------------------: berechneter preis " + kosten.toString());
 
                                                 Double calculatedPrice = 0.0;
                                                 for(Double val: kosten){
@@ -134,7 +128,6 @@ public class CalendarFragment extends Fragment {
                                                 n.setMaximumFractionDigits(2);
 
                                                 tvPricePerMonth.setText(n.format(calculatedPrice));
-
                                             }
                                         }
                                     }

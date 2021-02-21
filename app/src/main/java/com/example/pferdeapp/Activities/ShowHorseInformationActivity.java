@@ -9,23 +9,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pferdeapp.Database.Feed;
 import com.example.pferdeapp.R;
-import com.example.pferdeapp.hilfsklassen.ChangeFeedplanDialog;
 import com.example.pferdeapp.hilfsklassen.DeleteDialog;
 import com.example.pferdeapp.hilfsklassen.FeedPlanAdapter;
 import com.example.pferdeapp.hilfsklassen.FeedPlanListModel;
-import com.example.pferdeapp.hilfsklassen.IngredientsAdapter;
-import com.example.pferdeapp.hilfsklassen.IngredientsListModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,10 +37,11 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
     private static final String TAG = "ShowHorseActivity";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String horseNameString, userId;
+    String horseNameString, userId, horseName, horseHeight, horseWeight, horseCondition, defect, intolerance;
     ListView mfeedListView;
-    TextView textViewHorseName, textViewHorseInformation;
+    TextView textViewHorseName, textViewHorseInformation, textViewTextHorseInformation;
     Button goToAddFeedBtn, goBackToHorseFragmentBtn, mCalculateIngrementsBtn;
+    ImageButton mEditHorseBtn;
     //private List<String> feedList = new ArrayList<>();
     ArrayList<FeedPlanListModel> feedPlanList;
     FeedPlanAdapter feedPlanAdapter;
@@ -58,7 +55,11 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
         final Intent intent = new Intent(getApplicationContext(), AddHorseFeedActivity.class);
 
         textViewHorseInformation = findViewById(R.id.horseInformationTextView);
+        textViewTextHorseInformation = findViewById(R.id.horseInformationTextTextView);
         textViewHorseName = findViewById(R.id.horse_name_text_view);
+        mEditHorseBtn = findViewById(R.id.edit_horse_button);
+
+
         goToAddFeedBtn = findViewById(R.id.add_horse_feed_button);
         goBackToHorseFragmentBtn = findViewById(R.id.back_to_horse_fragment_button);
         mfeedListView = findViewById(R.id.horse_feed_plan);
@@ -90,7 +91,31 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
         if(getIntent().hasExtra("HorseName") == true) {
 
             horseNameString = getIntent().getExtras().getString("HorseName");
+            horseWeight = getIntent().getExtras().getString("HorseWeight");
+            horseHeight = getIntent().getExtras().getString("HorseHigh");
+            horseCondition = getIntent().getExtras().getString("HorseCondition");
+            defect = getIntent().getExtras().getString("HorseDefect");
+            intolerance = getIntent().getExtras().getString("HorseIntolerance");
+
             userId= getIntent().getExtras().getString("UserId");
+
+            mEditHorseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intentEditHorse = new Intent(getApplicationContext(), AddHorseActivity.class);
+
+                    intentEditHorse.putExtra("HorseName", horseNameString);
+                    intentEditHorse.putExtra("HorseWeight", horseWeight);
+                    intentEditHorse.putExtra("HorseHigh", horseHeight);
+                    intentEditHorse.putExtra("HorseCondition", horseCondition);
+                    intentEditHorse.putExtra("HorseDefect", defect);
+                    intentEditHorse.putExtra("HorseIntolerance", intolerance);
+
+                    startActivity(intentEditHorse);
+
+                }
+            });
 
             mCalculateIngrementsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,17 +169,14 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
                         if(snapshot.get("feedId") == null){
                             feedPlan = new FeedPlanListModel("Füge Futter dem Futterplan hinzu");
                             feedPlanList.add(feedPlan);
-                            Log.d(TAG, "_________________" + feedPlanList.toString());
 
                         }else{
-                            Log.d(TAG, "_________________" + snapshot);
                             String[] splitFeedId = snapshot.getString("feedId").split("_");
 
                             String ration = snapshot.get("numberOfMeals").toString() + "x tägl. " + snapshot.get("feedInGram").toString()  + "g";
                             feedPlan = new FeedPlanListModel(splitFeedId[1],  splitFeedId[0],  ration , snapshot.getString("feedId"));
 
                             feedPlanList.add(feedPlan);
-                            Log.d(TAG, "_________________" +  feedPlanList.toString());
                         }
                     }
                     feedPlanAdapter.notifyDataSetChanged();
@@ -169,23 +191,30 @@ public class ShowHorseInformationActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            String horseName = document.getString("horseName");
+                            horseName = document.getString("horseName");
                             double helpValue = document.getDouble("horseHeight");
-                            String horseHeight = String.valueOf((int) helpValue);
+                            horseHeight = String.valueOf((int) helpValue);
                             double helpValue2 = document.getDouble("horseWeight");
-                            String horseWeight = String.valueOf((int) helpValue2);
-                            String horseCondition = document.getString("horseCondition");
-                            String defect = document.getString("defect");
-                            String intolerance = document.getString("intolerance");
+                            horseWeight = String.valueOf((int) helpValue2);
+                            horseCondition = document.getString("horseCondition");
+                            defect = document.getString("defect");
+                            intolerance = document.getString("intolerance");
 
                             textViewHorseName.setText(horseName);
 
-                            textViewHorseInformation.setText("Name: " + horseName + "\n"
-                                    + "Stockmaß: " + horseHeight + " cm" +"\n"
-                                    + "Gewicht: " + horseWeight + " kg" + "\n"
-                                    + "Trainingszustand: " + horseCondition + "\n"
-                                    + "Mangel: " + defect + "\n"
-                                    + "Intoleranz: " + intolerance + "\n");
+                            textViewTextHorseInformation.setText("Name: \n"
+                                    + "Stockmaß: \n"
+                                    + "Gewicht: \n"
+                                    + "Trainingszustand:     \n"
+                                    + "Mangel: \n"
+                                    + "Intoleranz: \n");
+
+                            textViewHorseInformation.setText(horseName + "\n"
+                                    + horseHeight +"\n"
+                                    + horseWeight + " kg" + "\n"
+                                    + horseCondition + "\n"
+                                    + defect + "\n"
+                                    + intolerance + "\n");
 
                             intent.putExtra("HorseName", horseName);
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());

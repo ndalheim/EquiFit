@@ -39,6 +39,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class AddFeedActivity extends AppCompatActivity {
@@ -57,6 +58,7 @@ public class AddFeedActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     //Map<String, Map<Double, String>> ingredients = new HashMap<String, Map<Double, String>>();
     Map<String, Object> ingredients = new HashMap<>();
+    List<String> ingredientsList = new ArrayList<String>();
     //Map<String, String> ingredientsUnit = new HashMap<>();
     //Map<Double, String> unit = new HashMap<Double, String>();
 
@@ -82,6 +84,7 @@ public class AddFeedActivity extends AppCompatActivity {
         mIngredients = (Spinner) findViewById(R.id.feed_ingredients_spinner);
         ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.ingrements_array, android.R.layout.simple_spinner_item);
+        conditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mIngredients.setAdapter(conditionAdapter);
 
         mIngredientsValue = findViewById(R.id.feed_ingredients_value);
@@ -89,6 +92,7 @@ public class AddFeedActivity extends AppCompatActivity {
         mUnit = (Spinner) findViewById(R.id.unit_spinner);
         ArrayAdapter<CharSequence> unitAdapter = ArrayAdapter.createFromResource(this,
                 R.array.unit_array, android.R.layout.simple_spinner_item);
+        unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mUnit.setAdapter(unitAdapter);
 
         mAddIngredientsBtn = findViewById(R.id.add_ingredients_button);
@@ -113,6 +117,7 @@ public class AddFeedActivity extends AppCompatActivity {
                 ingredientsUnit.put(mUnit.getSelectedItem().toString(),mIngredientsValue.getText().toString().trim());
                 //ingredientsUnit.put("unit",mUnit.getSelectedItem().toString());
                 ingredients.put(mIngredients.getSelectedItem().toString(), ingredientsUnit);
+                ingredientsList.add(mIngredients.getSelectedItem().toString());
                 Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
                 addIngredientItem(view);
 
@@ -204,6 +209,9 @@ public class AddFeedActivity extends AppCompatActivity {
         Double feedAmout;
         Double feedPrice;
 
+
+
+        ingredientsList.clear();
         ingredients.clear();
 
         Iterator<String> keys = obj.keys();
@@ -223,13 +231,16 @@ public class AddFeedActivity extends AppCompatActivity {
             JSONObject ingredientsObject  = obj.getJSONObject(feedID).getJSONObject("ingredients");
             Iterator<String> ingredientsKeys = ingredientsObject.keys();
             JSONArray ingredientsArray = ingredientsObject.names();
+            ingredientsList.add(ingredientsArray.getString(0));
 
             for (int j = 0; j < ingredientsArray.length(); j++) {
                 Map<String, String> ingredientsUnit = new HashMap<>();
+
                 ingredientsName = ingredientsArray.getString(i);
 
                 unit = ingredientsObject.getJSONObject(ingredientsName).getString("unit");
                 value = ingredientsObject.getJSONObject(ingredientsName).getString("quantity");
+
 
                 ingredientsUnit.put(unit, value);
 
@@ -265,6 +276,7 @@ public class AddFeedActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), items.get(position), Toast.LENGTH_LONG).show();
                 //soll Inhaltstoff aus der Map löschen
                 ingredients.remove(items.get(position).split("  ")[0]);
+                ingredientsList.remove(items.get(position).split("  ")[0]);
                 //ingredientsUnit.remove(items.get(position).split("  ")[0]);
 
                 items.remove(position);
@@ -291,7 +303,7 @@ public class AddFeedActivity extends AppCompatActivity {
             }
 
 
-            Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients);
+            Feed feed = new Feed(feedName, feedBrand, productDescription, composition, feedingRecommendationDescription, ingredients, ingredientsList);
             Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_LONG).show();
             String documentFeedName = feedName + "_" + feedBrand;
 

@@ -41,6 +41,7 @@ public class AddHorseActivity extends AppCompatActivity{
     Spinner mhorseCondition, mhorseDefect, mhorseIntolerance;
     Button mSaveHorseBtn, mBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String horseNameString, horseWeight, horseHigh, horseCondition, horseDefect, horseIntolerance;
 
 
     @Override
@@ -55,20 +56,48 @@ public class AddHorseActivity extends AppCompatActivity{
         mhorseCondition = (Spinner) findViewById(R.id.horse_condidion_spinner);
         ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.condidion_array, android.R.layout.simple_spinner_item);
+        conditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mhorseCondition.setAdapter(conditionAdapter);
 
         mhorseDefect = (Spinner) findViewById(R.id.horse_defect_spinner);
         ArrayAdapter<CharSequence> defectAdapter = ArrayAdapter.createFromResource(this,
                 R.array.defects_array, android.R.layout.simple_spinner_item);
+        defectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mhorseDefect.setAdapter(defectAdapter);
 
         mhorseIntolerance = (Spinner) findViewById(R.id.horse_intolerance_spinner);
         ArrayAdapter<CharSequence> intoleranceAdapter = ArrayAdapter.createFromResource(this,
                 R.array.defects_array, android.R.layout.simple_spinner_item);
-        setSpinner(mhorseIntolerance, intoleranceAdapter);
+        intoleranceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mhorseIntolerance.setAdapter(intoleranceAdapter);
 
         mSaveHorseBtn = findViewById(R.id.save_horse_information_button);
         mBackBtn = findViewById(R.id.back_to_FeedFragment_button);
+
+        //Falls die View von edit horse aufgerufen wurde, werden die Informationen von dem Pferd in der Ansicht gesetzt
+        if(getIntent().hasExtra("HorseName") == true) {
+            horseNameString = getIntent().getExtras().getString("HorseName");
+            horseWeight = getIntent().getExtras().getString("HorseWeight");
+            horseHigh = getIntent().getExtras().getString("HorseHigh");
+            horseCondition = getIntent().getExtras().getString("HorseCondition");
+            horseDefect = getIntent().getExtras().getString("HorseDefect");
+            horseIntolerance = getIntent().getExtras().getString("HorseIntolerance");
+
+
+            mhorseName.setText(horseNameString);
+            mhorseName.setFocusable(false);
+
+            mhorseHeight.setText(horseHigh);
+            mhorseWeight.setText(horseWeight);
+
+            mhorseCondition.setSelection(conditionAdapter.getPosition(horseCondition));
+            mhorseDefect.setSelection(defectAdapter.getPosition(horseDefect));
+            mhorseIntolerance.setSelection(intoleranceAdapter.getPosition(horseIntolerance));
+
+        }
+
+
+
 
 
         // Weiterleitung zur Main Activity

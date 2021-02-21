@@ -44,8 +44,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="320dp"
-        android:layout_height="271dp"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,161 +53,217 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/feed_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:ems="10"
-            android:hint="@string/feedName"
-            android:inputType="textPersonName"
-            android:lines="1"
-            android:singleLine="true" />
 
-        <EditText
-            android:id="@+id/feed_brand"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feed_name_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:ems="10"
-            android:hint="@string/feedBrand"
-            android:inputType="text"
-            android:lines="1"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/feed_product_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:ems="10"
-            android:hint="@string/productDescription"
-            android:inputType="text" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feed_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:ems="10"
+                android:hint="@string/feedName"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:singleLine="true" />
 
-        <EditText
-            android:id="@+id/feed_composition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:ems="10"
-            android:hint="@string/feedComposition"
-            android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/feed_recommendation_description"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feed_brand_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:ems="10"
-            android:hint="@string/feedRecommendationDescription"
-            android:inputType="text" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feed_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:ems="10"
+                android:hint="@string/feedBrand"
+                android:inputType="text"
+                android:lines="1"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feed_product_description_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feed_product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:ems="10"
+                android:hint="@string/productDescription"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feed_composition_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feed_composition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:ems="10"
+                android:hint="@string/feedComposition"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feed_recommendation_description_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feed_recommendation_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkGreen"
+                android:ems="10"
+                android:hint="@string/feedRecommendationDescription"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/feed_amount"
-                android:layout_width="157dp"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorDarkGreen"
-                android:ems="10"
-                android:hint="@string/feedAmount"
-                android:inputType="number"
-                android:lines="1"
-                android:singleLine="true"
-                android:maxLength="2"
-                android:digits="0123456789"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/feed_amount_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/feed_costs"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorDarkGreen"
-                android:digits="0123456789."
-                android:ems="10"
-                android:hint="@string/feedCosts"
-                android:inputType="number"
-                android:lines="1"
-                android:maxLength="5"
-                android:singleLine="true" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/feed_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorDarkGreen"
+                    android:digits="0123456789"
+                    android:ems="10"
+                    android:hint="@string/feedAmount"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="2"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/feed_costs_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/feed_costs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorDarkGreen"
+                    android:digits="0123456789."
+                    android:ems="10"
+                    android:hint="@string/feedCosts"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="5"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="324dp"
-        android:layout_height="284dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            <Spinner
+                android:id="@+id/feed_ingredients_spinner"
+                android:layout_width="114dp"
+                android:layout_height="match_parent"
+                tools:ignore="MissingConstraints" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/feed_ingredients_value_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/feed_ingredients_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorDarkGreen"
+                    android:digits="0123456789.,"
+                    android:ems="10"
+                    android:hint="@string/feedIngredientsValue"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="7"
+                    android:singleLine="true"  />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Spinner
+                android:id="@+id/unit_spinner"
+                android:layout_width="98dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/add_ingredients_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/my_button"
+                android:text="@string/add" />
+
+        </LinearLayout>
 
         <ListView
             android:id="@+id/ingredients_list_view"
             android:layout_width="match_parent"
             android:layout_height="235dp"></ListView>
 
-        <Button
-            android:id="@+id/save_json_button"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="@string/add_json"
-            android:layout_marginStart="88dp"
-            android:layout_marginLeft="88dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/my_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.148" />/>
-
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="320dp"
-        android:layout_height="39dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/save_json_button"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/add_json"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/my_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.148" />
 
-        <Spinner
-            android:id="@+id/feed_ingredients_spinner"
-            android:layout_width="132dp"
-            android:layout_height="match_parent"
-            tools:ignore="MissingConstraints" />
 
-        <EditText
-            android:id="@+id/feed_ingredients_value"
-            android:layout_width="49dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/colorDarkGreen"
-            android:digits="0123456789.,"
-            android:ems="10"
-            android:hint="@string/feedIngredientsValue"
-            android:inputType="number"
-            android:lines="1"
-            android:maxLength="7"
-            android:singleLine="true" />
-
-        <Spinner
-            android:id="@+id/unit_spinner"
-            android:layout_width="98dp"
-            android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/add_ingredients_button"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_button"
-            android:text="@string/add" />
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
