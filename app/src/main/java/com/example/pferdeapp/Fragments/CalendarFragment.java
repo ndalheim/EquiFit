@@ -114,10 +114,11 @@ public class CalendarFragment extends Fragment {
                                         // Durchsucht die Futter-Datenbank nach dem Futter aus dem Futterplan
                                         for (DocumentSnapshot snapshot3 : value3) {
                                             if(feedId.equals(snapshot3.getId().toString())){
+                                                Log.d(TAG, "onEvent: " + snapshot3.getId() + snapshot3.getDouble("price"));
                                                 Double amount = snapshot3.getDouble("amount");
                                                 Double price = snapshot3.getDouble("price");
 
-                                                Double test = 30 * price / (amount/(gramPerDay/1000));
+                                                Double test = 30 * (((price/amount)*gramPerDay)/1000);
                                                 kosten.add(test);
 
                                                 Double calculatedPrice = 0.0;

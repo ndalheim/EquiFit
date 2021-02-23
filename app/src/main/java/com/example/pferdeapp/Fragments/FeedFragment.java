@@ -259,7 +259,6 @@ public class FeedFragment extends Fragment {
         }
 
         Map<K, V> result = new LinkedHashMap<>();
-        Log.d(TAG, "sortByValue: " + list.size());
 
         for (Map.Entry<K, V> entry : list) {
             result.put(entry.getKey(), entry.getValue());

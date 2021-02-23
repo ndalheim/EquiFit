@@ -25,6 +25,7 @@ public class FeedInformationActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String documentNameString;
     TextView tvFeedName, tvIngredientsName, tvIngredientsValue, tvIngredientsUnit;
+    String price, amount;
 
 
 
@@ -42,7 +43,24 @@ public class FeedInformationActivity extends AppCompatActivity {
         if(getIntent().hasExtra("DocumentName") == true) {
             documentNameString = getIntent().getExtras().getString("DocumentName");
 
-           Toast.makeText(this, "DokumentName:"+ documentNameString, Toast.LENGTH_SHORT).show();
+            db.collection("FeedCosts").document(documentNameString).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Double priceDouble = document.getDouble("price");
+                            Double amountDouble = document.getDouble("amount");
+                            price = Double.toString(priceDouble);
+                            amount = Double.toString(amountDouble);
+
+                        }
+                    }
+                }
+
+            });
+
+
 
            db.collection("Feed").document(documentNameString).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -52,8 +70,6 @@ public class FeedInformationActivity extends AppCompatActivity {
                         if (document.exists()) {
                             String futtername = document.getString("name");
                             String brand = document.getString("brand");
-                            String price = document.getString("price");
-                            String amount = document.getString("amount");
                             String productDescription = document.getString("productDescription");
                             String composition = document.getString("composition");
                             Map<String , Object> ingredients = (Map<String, Object>) document.get("ingredients");
@@ -65,7 +81,7 @@ public class FeedInformationActivity extends AppCompatActivity {
 
                             tvFeedName.setText("Name: " + "\n" + futtername + "\n\n" +
                                     "Marke: " + "\n" + brand + "\n\n" +
-                                    //"Preis und Menge: " + "\n" + price + " pro " + amount + "\n\n" +
+                                    "Preis und Menge: " + "\n" + price + " Euro pro " + amount + " kg\n\n" +
                                     "Marke: " + "\n" + brand + "\n\n" +
                                     "Produktbeschreibung: " + "\n" + productDescription + "\n\n" +
                                     "Zusammensetzung: " + "\n" + composition + "\n\n");
@@ -91,13 +107,10 @@ public class FeedInformationActivity extends AppCompatActivity {
                                 }
                             }
 
-                            Log.d(TAG, "onComplete: ------------" + ingredientsName);
                             tvIngredientsName.setText(ingredientsName);
                             tvIngredientsValue.setText(ingredientsValue);
                             tvIngredientsUnit.setText(IngredientsUnit);
 
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            Toast.makeText(FeedInformationActivity.this, documentNameString, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(FeedInformationActivity.this, "Dokument existiert nicht", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "No such document");

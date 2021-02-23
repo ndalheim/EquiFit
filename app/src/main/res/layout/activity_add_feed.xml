@@ -212,22 +212,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayoutIngredientList"
+        <ListView
+            android:id="@+id/ingredients_list_view"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            android:layout_height="137dp"></ListView>
 
-            <ListView
-                android:id="@+id/ingredients_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="28dp"></ListView>
-
-
-        </LinearLayout>
 
     </LinearLayout>
 
